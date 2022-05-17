@@ -104,8 +104,8 @@ analytics:
 author:
   name             : "Hyenii"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
-  location         : "Somewhere"
+  bio              : "프론트엔드 개발자😊"
+  location         : "South Korea"
   email            :
   links:
     - label: "Email"
