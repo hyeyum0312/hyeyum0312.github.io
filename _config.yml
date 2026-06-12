@@ -20,11 +20,11 @@ title: "Hyenii.log"
 title_separator: "-"
 subtitle: # site tagline that appears below site title in masthead
 name: "Hyenii"
-description: "An amazing website."
+description: "프론트엔드 개발자 Hyenii의 기술 블로그 — React, Flutter로 웹과 앱을 만들며 부딪힌 문제와 고민을 기록합니다."
 url: "https://hyeyum0312.github.io"
 future: true
-baseurl: # the subpath of your site, e.g. "/blog"
-repository: # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
+baseurl: "" # the subpath of your site, e.g. "/blog"
+repository: "hyeyum0312/hyeyum0312.github.io"
 teaser: # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo: # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title: # overrides the website title displayed in the masthead, use " " for no title
@@ -104,50 +104,23 @@ analytics:
 author:
   name: "HYENII"
   avatar: "/images/logo.jpeg"
-  bio: "I am an **amazing** person."
+  bio: "더 나은 사용자 경험을 고민하는 프론트엔드 개발자입니다."
   location: "South Korea"
   email:
   links:
-    - label: "Email"
-      icon: "fas fa-fw fa-envelope-square"
-      # url: "mailto:your.name@email.com"
-    - label: "Website"
-      icon: "fas fa-fw fa-link"
-      # url: "https://your-website.com"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      # url: "https://twitter.com/"
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url: "https://github.com/"
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url: "https://instagram.com/"
+      url: "https://github.com/hyeyum0312"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      # url: "mailto:개인이메일@example.com"   # ← 개인 이메일 주소로 바꾸고 앞의 # 제거
 
 # Site Footer
 footer:
   links:
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      # url:
-    - label: "Facebook"
-      icon: "fab fa-fw fa-facebook-square"
-      # url:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      # url:
-    - label: "GitLab"
-      icon: "fab fa-fw fa-gitlab"
-      # url:
-    - label: "Bitbucket"
-      icon: "fab fa-fw fa-bitbucket"
-      # url:
-    - label: "Instagram"
-      icon: "fab fa-fw fa-instagram"
-      # url:
+      url: "https://github.com/hyeyum0312"
 
 # Reading Files
 include:

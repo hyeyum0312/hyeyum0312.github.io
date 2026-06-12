@@ -6,3 +6,11 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+/* custom: 프로필 사이드바와 본문(글목록) 사이 간격 — 넓은 화면에서만 */
+@include breakpoint($large) {
+  .archive,
+  .page {
+    padding-left: 1.5em;
+  }
+}
