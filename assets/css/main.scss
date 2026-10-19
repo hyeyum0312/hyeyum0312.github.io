@@ -14,3 +14,8 @@
     padding-left: 1.5em;
   }
 }
+
+/* custom: 글 본문 오른쪽 여백(TOC 사이드바 자리) 제거 */
+.page.h-entry {
+  padding-right: 0;
+}
