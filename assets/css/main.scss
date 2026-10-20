@@ -140,11 +140,11 @@ body {
 
   &__avatar {
     flex: none;
+    image-rendering: pixelated;
     width: 128px;
     height: 128px;
     border-radius: 50%;
     object-fit: cover;
-    object-position: center 15%;
     border: 1px solid var(--border);
 
     @media (max-width: 640px) {
@@ -261,6 +261,11 @@ body {
 
   @media (max-width: 640px) {
     grid-template-columns: 1fr;
+  }
+
+  /* 카드 개수가 홀수면 마지막 카드를 한 줄 전체로 */
+  > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 }
 
@@ -385,11 +390,9 @@ body {
   }
 }
 
-/* custom: 사이드바 프로필 사진(세로 사진을 원형으로) */
+/* custom: 사이드바 프로필(픽셀아트) */
 .author__avatar img {
-  aspect-ratio: 1;
-  object-fit: cover;
-  object-position: center 15%;
+  image-rendering: pixelated;
 }
 
 /* custom: About(이력) */
@@ -409,14 +412,15 @@ body {
   &__photo {
     flex: none;
     width: 140px;
-    height: 175px;
-    border-radius: 14px;
+    height: 140px;
+    border-radius: 20px;
+    image-rendering: pixelated;
     object-fit: cover;
     border: 1px solid var(--border);
 
     @media (max-width: 640px) {
-      width: 112px;
-      height: 140px;
+      width: 104px;
+      height: 104px;
     }
   }
 
@@ -537,24 +541,35 @@ body {
     margin-top: 0.75em;
   }
 
-  &__cols {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5em;
-    margin-top: 1.25em;
+  &__achievements {
+    margin: 1em 0 0;
+    padding-left: 1.1em;
 
-    @media (max-width: 640px) {
-      grid-template-columns: 1fr;
-      gap: 0.5em;
+    li {
+      margin-bottom: 0.35em;
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+  }
+
+  &__tasks {
+    margin-top: 0.75em;
+
+    summary {
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.8em;
+      font-weight: 600;
     }
 
     ul {
-      margin: 0;
+      margin: 0.5em 0 0;
       padding-left: 1.1em;
     }
 
     li {
       margin-bottom: 0.3em;
+      color: var(--muted);
       font-size: 0.85em;
       line-height: 1.6;
     }
@@ -620,12 +635,19 @@ body {
   }
 }
 
-.resume-split {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2em;
+/* custom: 방문한 링크 색(a:visited)이 버튼·카드 글자색을 덮지 않게 */
+.home-btn:visited,
+.featured-card:visited,
+.post-item__link:visited {
+  color: var(--text);
+}
 
-  @media (max-width: 640px) {
-    grid-template-columns: 1fr;
-  }
+.home-btn:hover {
+  color: var(--accent);
+}
+
+.home-btn--primary,
+.home-btn--primary:visited,
+.home-btn--primary:hover {
+  color: #fff;
 }

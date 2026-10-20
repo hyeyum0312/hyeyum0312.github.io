@@ -6,7 +6,7 @@ layout: default
 
 <div id="main" role="main" class="home resume">
   <section class="resume-head">
-    <img class="resume-head__photo" src="{{ r.photo | relative_url }}" alt="{{ r.name }} 프로필 사진">
+    <img class="resume-head__photo" src="{{ r.photo | relative_url }}" alt="{{ r.name }} 픽셀아트 프로필">
     <div>
       <p class="home-hero__eyebrow">{{ r.role }}</p>
       <h1 class="resume-head__name">{{ r.name }}</h1>
@@ -60,18 +60,15 @@ layout: default
             <ul class="home-hero__stack resume-project__stack">
               {% for t in p.stack %}<li>{{ t }}</li>{% endfor %}
             </ul>
-            <div class="resume-project__cols">
-              <div>
-                <h5>주요 업무</h5>
-                <ul>{% for t in p.tasks %}<li>{{ t }}</li>{% endfor %}</ul>
-              </div>
-              {% if p.achievements %}
-                <div>
-                  <h5>주요 성과</h5>
-                  <ul>{% for t in p.achievements %}<li>{{ t }}</li>{% endfor %}</ul>
-                </div>
-              {% endif %}
-            </div>
+            {% if p.achievements %}
+              <ul class="resume-project__achievements">
+                {% for t in p.achievements %}<li>{{ t }}</li>{% endfor %}
+              </ul>
+            {% endif %}
+            <details class="resume-project__tasks"{% unless p.achievements %} open{% endunless %}>
+              <summary>주요 업무</summary>
+              <ul>{% for t in p.tasks %}<li>{{ t }}</li>{% endfor %}</ul>
+            </details>
             {% if p.posts %}
               <div class="resume-project__posts">
                 <h5>관련 글</h5>
@@ -106,17 +103,9 @@ layout: default
     <ul class="resume-list">{% for t in r.ai %}<li>{{ t }}</li>{% endfor %}</ul>
   </section>
 
-  <section class="home-section resume-split">
-    <div>
-      <h2 class="home-section__title">스터디</h2>
-      <ul class="resume-list">{% for t in r.studies %}<li>{{ t }}</li>{% endfor %}</ul>
-    </div>
-    <div>
-      <h2 class="home-section__title">학력</h2>
-      <ul class="resume-list">
-        {% for e in r.education %}<li>{{ e.school }} <span class="resume-job__meta">{{ e.period }}</span></li>{% endfor %}
-      </ul>
-    </div>
+  <section class="home-section">
+    <h2 class="home-section__title">스터디</h2>
+    <ul class="resume-list">{% for t in r.studies %}<li>{{ t }}</li>{% endfor %}</ul>
   </section>
 
   {{ content }}
