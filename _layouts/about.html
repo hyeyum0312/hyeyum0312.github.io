@@ -1,0 +1,123 @@
+---
+layout: default
+---
+
+{% assign r = site.data.resume %}
+
+<div id="main" role="main" class="home resume">
+  <section class="resume-head">
+    <img class="resume-head__photo" src="{{ r.photo | relative_url }}" alt="{{ r.name }} 프로필 사진">
+    <div>
+      <p class="home-hero__eyebrow">{{ r.role }}</p>
+      <h1 class="resume-head__name">{{ r.name }}</h1>
+      <p class="resume-head__career">{{ r.career }}</p>
+      <ul class="resume-head__contacts">
+        {% for c in r.contacts %}
+          <li>
+            <i class="{{ c.icon }}" aria-hidden="true"></i>
+            {% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}{{ c.label }}{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section__title">소개</h2>
+    <div class="resume-intro">
+      {% for line in r.intro %}<p>{{ line }}</p>{% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section__title">업무 강점</h2>
+    <div class="featured-grid">
+      {% for s in r.strengths %}
+        <div class="resume-card">
+          <h3 class="featured-card__title">{{ s.title }}</h3>
+          <p class="featured-card__excerpt">{{ s.desc }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section__title">경력</h2>
+    {% for job in r.experience %}
+      <div class="resume-job">
+        <div class="resume-job__head">
+          <h3 class="resume-job__company">{{ job.company }}</h3>
+          <span class="resume-job__meta">{{ job.role }} · {{ job.period }}</span>
+        </div>
+        {% for p in job.projects %}
+          <article class="resume-project">
+            <div class="resume-project__head">
+              <h4 class="resume-project__name">{{ p.name }}</h4>
+              <span class="resume-job__meta">{{ p.period }}</span>
+            </div>
+            {% if p.desc %}<p class="resume-project__desc">{{ p.desc }}</p>{% endif %}
+            <p class="resume-project__team">참여 인원 {{ p.team }}</p>
+            <ul class="home-hero__stack resume-project__stack">
+              {% for t in p.stack %}<li>{{ t }}</li>{% endfor %}
+            </ul>
+            <div class="resume-project__cols">
+              <div>
+                <h5>주요 업무</h5>
+                <ul>{% for t in p.tasks %}<li>{{ t }}</li>{% endfor %}</ul>
+              </div>
+              {% if p.achievements %}
+                <div>
+                  <h5>주요 성과</h5>
+                  <ul>{% for t in p.achievements %}<li>{{ t }}</li>{% endfor %}</ul>
+                </div>
+              {% endif %}
+            </div>
+            {% if p.posts %}
+              <div class="resume-project__posts">
+                <h5>관련 글</h5>
+                {% for url in p.posts %}
+                  {% assign post = site.posts | where: "url", url | first %}
+                  {% if post %}
+                    <a href="{{ post.url | relative_url }}"><i class="far fa-file-alt" aria-hidden="true"></i> {{ post.title }}</a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section__title">기술 스택</h2>
+    <dl class="resume-skills">
+      {% for g in r.skills %}
+        <dt>{{ g.group }}</dt>
+        <dd>
+          <ul class="home-hero__stack">{% for t in g.items %}<li>{{ t }}</li>{% endfor %}</ul>
+        </dd>
+      {% endfor %}
+    </dl>
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section__title">AI 활용</h2>
+    <ul class="resume-list">{% for t in r.ai %}<li>{{ t }}</li>{% endfor %}</ul>
+  </section>
+
+  <section class="home-section resume-split">
+    <div>
+      <h2 class="home-section__title">스터디</h2>
+      <ul class="resume-list">{% for t in r.studies %}<li>{{ t }}</li>{% endfor %}</ul>
+    </div>
+    <div>
+      <h2 class="home-section__title">학력</h2>
+      <ul class="resume-list">
+        {% for e in r.education %}<li>{{ e.school }} <span class="resume-job__meta">{{ e.period }}</span></li>{% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  {{ content }}
+</div>
