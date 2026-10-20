@@ -10,7 +10,7 @@ layout: default
     <div>
       <p class="home-hero__eyebrow">{{ r.role }}</p>
       <h1 class="resume-head__name">{{ r.name }}</h1>
-      <p class="resume-head__career">{{ r.career }}</p>
+      {% include career-length.html periods=r.career_periods %}
       <ul class="resume-head__contacts">
         {% for c in r.contacts %}
           <li>
@@ -56,7 +56,7 @@ layout: default
               <span class="resume-job__meta">{{ p.period }}</span>
             </div>
             {% if p.desc %}<p class="resume-project__desc">{{ p.desc }}</p>{% endif %}
-            <p class="resume-project__team">참여 인원 {{ p.team }}</p>
+            {% if p.team %}<p class="resume-project__team">참여 인원 {{ p.team }}</p>{% endif %}
             <ul class="home-hero__stack resume-project__stack">
               {% for t in p.stack %}<li>{{ t }}</li>{% endfor %}
             </ul>

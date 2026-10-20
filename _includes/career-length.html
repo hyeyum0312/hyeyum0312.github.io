@@ -1,0 +1,38 @@
+{%- comment -%}
+  재직 기간 목록으로 총 경력을 계산한다. 시작 월과 끝 월을 모두 포함하고, end가 비어 있으면 현재까지로 본다.
+  빌드 시각 기준으로 먼저 계산하고, 페이지를 연 날짜 기준으로 스크립트가 다시 계산한다.
+{%- endcomment -%}
+{%- assign now_y = site.time | date: "%Y" | plus: 0 -%}
+{%- assign now_m = site.time | date: "%m" | plus: 0 -%}
+{%- assign total = 0 -%}
+{%- for p in include.periods -%}
+  {%- assign s = p.start | split: "-" -%}
+  {%- if p.end == "" or p.end == nil -%}
+    {%- assign ey = now_y -%}{%- assign em = now_m -%}
+  {%- else -%}
+    {%- assign e = p.end | split: "-" -%}
+    {%- assign ey = e[0] | plus: 0 -%}{%- assign em = e[1] | plus: 0 -%}
+  {%- endif -%}
+  {%- assign start_index = s[0] | times: 12 | plus: s[1] -%}
+  {%- assign months = ey | times: 12 | plus: em | minus: start_index | plus: 1 -%}
+  {%- assign total = total | plus: months -%}
+{%- endfor -%}
+{%- assign years = total | divided_by: 12 -%}
+{%- assign rest = total | modulo: 12 -%}
+<p class="resume-head__career" data-career-periods='{{ include.periods | jsonify }}'>총 경력 {{ years }}년{% if rest > 0 %} {{ rest }}개월{% endif %}</p>
+<script>
+  (function () {
+    var el = document.currentScript.previousElementSibling;
+    try {
+      var periods = JSON.parse(el.getAttribute('data-career-periods'));
+      var now = new Date();
+      var total = periods.reduce(function (sum, p) {
+        var s = p.start.split('-').map(Number);
+        var e = p.end ? p.end.split('-').map(Number) : [now.getFullYear(), now.getMonth() + 1];
+        return sum + (e[0] * 12 + e[1]) - (s[0] * 12 + s[1]) + 1;
+      }, 0);
+      var y = Math.floor(total / 12), m = total % 12;
+      el.textContent = '총 경력 ' + y + '년' + (m ? ' ' + m + '개월' : '');
+    } catch (e) {}
+  })();
+</script>
