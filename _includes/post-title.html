@@ -1,0 +1,9 @@
+{%- comment -%} 제목 앞의 "[React] " 같은 말머리는 태그와 겹치므로 목록에서는 뺀다 {%- endcomment -%}
+{%- assign first_char = include.title | slice: 0 -%}
+{%- if first_char == "[" and include.title contains "] " -%}
+  {%- assign parts = include.title | split: "] " -%}
+  {%- assign prefix = parts | first | append: "] " -%}
+  {{- include.title | remove_first: prefix -}}
+{%- else -%}
+  {{- include.title -}}
+{%- endif -%}
