@@ -101,6 +101,17 @@ layout: default
   <section class="home-section">
     <h2 class="home-section__title">AI 활용</h2>
     <ul class="resume-list">{% for t in r.ai %}<li>{{ t }}</li>{% endfor %}</ul>
+    {% if r.ai_posts %}
+      <div class="resume-project__posts">
+        <h5>관련 글</h5>
+        {% for url in r.ai_posts %}
+          {% assign post = site.posts | where: "url", url | first %}
+          {% if post %}
+            <a href="{{ post.url | relative_url }}"><i class="far fa-file-alt" aria-hidden="true"></i> {{ post.title }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </section>
 
   <section class="home-section">
