@@ -1,6 +1,6 @@
 {%- comment -%}
   케이스 스터디 슬라이드. 기간·인원·기술 스택은 projects.yml에서 읽는다.
-  - 1장: 문제 / 해결 + (상황 · Before · After 카드가 있으면) 하단 카드
+  - 1장: 문제 / 해결 + (상황 · Before · After 카드가 있으면) 하단 카드, screen이 있으면 오른쪽에 실제 화면
   - 2장: 처리 흐름 + 설계 포인트 · 결과 · 배운 점
   하단 카드도 처리 흐름도 없으면 설계 포인트 · 결과까지 1장에 담는다.
 {%- endcomment -%}
@@ -15,6 +15,8 @@
 <section class="slide slide--case" id="{{ c.id }}">
   {% include cv/slide-head.html eyebrow="Case Study · Frontend" title=case_title project=cp %}
 
+  <div class="case-body{% if c.screen %} case-body--screen{% endif %}">
+  <div class="case-body__main">
   <div class="slide__row slide__row--2">
     <div class="card">
       <span class="badge badge--problem">문제 · Problem</span>
@@ -70,6 +72,14 @@
     </div>
   </div>
   {%- endunless %}
+  </div>
+  {%- if c.screen %}
+  <figure class="phone">
+    <div class="phone__frame"><img src="{{ c.screen.src | relative_url }}" alt="{{ c.screen.alt }}"></div>
+    <figcaption>{{ c.screen.caption }}</figcaption>
+  </figure>
+  {%- endif %}
+  </div>
 </section>
 
 {%- if has_cards or has_flow %}
