@@ -7,3 +7,12 @@ birth: ""        # 예: "1990.01.01"
 address: ""      # 공개 프로필의 location보다 자세한 주소가 필요할 때
 companies:
   current: ""    # career.yml의 private_key와 같은 키로 실명을 적는다
+
+# 학력 — 있으면 이력서 PDF에 "학력" 섹션으로 표시 (start/end는 "YYYY-MM")
+education: []
+#  - school: ""
+#    major: ""
+#    start: ""
+#    end: ""
+#    status: "졸업"
+#    gpa: ""

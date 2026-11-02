@@ -37,6 +37,8 @@ skills:
     items: [TanStack Query, Zustand, Pinia, Axios, Orval]
   - group: "Styling"
     items: [Tailwind CSS, SCSS]
+  - group: "Testing"
+    items: [Vitest]
   - group: "Platform"
     items: [Flutter WebView, Firebase]
 

@@ -49,6 +49,23 @@ classes: cv-page
     {% include cv/related-posts.html urls=pf.ai_posts absolute=true %}
   </section>
 
+  {%- comment -%} 학력은 _data/private.yml에만 있어 로컬 PDF에서만 나온다 {%- endcomment -%}
+  {%- assign edu = site.data.private.education -%}
+  {%- if edu and edu.size > 0 %}
+  <section class="home-section cv-keep">
+    <p class="cv-eyebrow">Education</p>
+    <h2 class="home-section__title">학력</h2>
+    <ul class="cv-edu">
+      {%- for e in edu %}
+      <li>
+        <div><strong>{{ e.school }}</strong> <span>{{ e.major }}</span></div>
+        <p>{% include cv/period.html start=e.start end=e.end %} · {{ e.status }}{% if e.gpa %} · 학점 {{ e.gpa }}{% endif %}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+
   <section class="home-section cv-keep">
     <p class="cv-eyebrow">Study</p>
     <h2 class="home-section__title">스터디</h2>

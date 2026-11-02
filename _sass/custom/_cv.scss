@@ -1663,3 +1663,37 @@
     }
   }
 }
+
+/* 이력서 학력 */
+.cv-edu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25em 1em;
+    margin: 0 0 0.5em;
+    font-size: 0.95em;
+  }
+
+  strong {
+    font-weight: 800;
+  }
+
+  span {
+    margin-left: 0.4em;
+    color: #3b4250;
+  }
+
+  p {
+    margin: 0;
+    color: var(--cv-accent);
+    font-family: var(--cv-mono);
+    font-size: 0.75em;
+    font-weight: 700;
+  }
+}

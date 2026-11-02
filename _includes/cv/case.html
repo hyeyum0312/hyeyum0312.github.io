@@ -6,6 +6,8 @@
   하단 카드도 처리 흐름도 없으면 설계 포인트 · 결과까지 1장에 담는다.
 {%- endcomment -%}
 {%- assign c = include.case -%}
+{%- assign show_screens = true -%}
+{%- if c.private_screens and site.data.private == nil -%}{%- assign show_screens = false -%}{%- endif -%}
 {%- assign cp = site.data.projects | where: "id", c.project | first -%}
 {%- capture case_title %}<span class="slide__project">PROJECT</span> <em>#{{ include.index }}</em> {{ c.title }}{% endcapture -%}
 {%- assign has_cards = false -%}
@@ -14,9 +16,9 @@
 {%- if c.flow and c.flow.size > 0 -%}{%- assign has_flow = true -%}{%- endif -%}
 
 <section class="slide slide--case" id="{{ c.id }}">
-  {% include cv/slide-head.html eyebrow="Case Study · Frontend" title=case_title project=cp %}
+  {% include cv/slide-head.html eyebrow="Case Study · Frontend" title=case_title project=cp stack=c.stack %}
 
-  <div class="case-body{% if c.screen %} case-body--screen{% endif %}">
+  <div class="case-body{% if c.screen and show_screens %} case-body--screen{% endif %}">
   <div class="case-body__main">
   <div class="slide__row slide__row--2">
     <div class="card">
@@ -74,7 +76,7 @@
   </div>
   {%- endunless %}
   </div>
-  {%- if c.screen %}
+  {%- if c.screen and show_screens %}
   <figure class="phone">
     <div class="phone__frame"><img src="{{ c.screen.src | relative_url }}" alt="{{ c.screen.alt }}"></div>
     <figcaption>{{ c.screen.caption }}</figcaption>
@@ -83,9 +85,9 @@
   </div>
 </section>
 
-{%- if c.screens and c.screens.size > 0 %}
+{%- if show_screens and c.screens and c.screens.size > 0 %}
 <section class="slide slide--case">
-  {% include cv/slide-head.html eyebrow="Screen Flow" title=case_title project=cp %}
+  {% include cv/slide-head.html eyebrow="Screen Flow" title=case_title project=cp stack=c.stack %}
   <ol class="screens">
     {%- for s in c.screens %}
     <li class="screens__item">
@@ -100,7 +102,7 @@
 
 {%- if has_cards or has_flow %}
 <section class="slide slide--case">
-  {% include cv/slide-head.html eyebrow="Architecture & Result" title=case_title project=cp %}
+  {% include cv/slide-head.html eyebrow="Architecture & Result" title=case_title project=cp stack=c.stack %}
 
   <div class="slide__row{% if has_flow %} slide__row--flow{% endif %}">
     {%- if has_flow %}
