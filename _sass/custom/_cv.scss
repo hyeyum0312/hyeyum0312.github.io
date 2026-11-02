@@ -1697,3 +1697,21 @@
     font-weight: 700;
   }
 }
+
+/* 실제 사진(로컬 PDF): 카드를 꽉 채우고 픽셀아트용 렌더링은 끈다 */
+.about__photo--real {
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: auto;
+  }
+}
+
+/* 이력서 상단(작은 카드)에서는 전신 사진의 상반신을 확대해 얼굴이 보이게 */
+.about--compact .about__photo--real img {
+  transform: scale(1.9);
+  transform-origin: 56% 30%;
+}

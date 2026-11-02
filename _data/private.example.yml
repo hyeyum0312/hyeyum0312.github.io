@@ -5,6 +5,7 @@
 phone: ""
 birth: ""        # 예: "1990.01.01"
 address: ""      # 공개 프로필의 location보다 자세한 주소가 필요할 때
+photo: ""        # 실제 사진 경로(예: "/images/private/profile.jpg"). images/private/는 gitignore 대상
 companies:
   current: ""    # career.yml의 private_key와 같은 키로 실명을 적는다
 

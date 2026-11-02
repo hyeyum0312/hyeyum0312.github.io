@@ -5,8 +5,10 @@
 {%- endcomment -%}
 {%- assign pf = site.data.profile -%}
 {%- assign pv = site.data.private -%}
+{%- comment -%} 실제 사진은 private.yml에 있을 때만(로컬 PDF) 쓰고, 공개 사이트는 픽셀아트 {%- endcomment -%}
+{%- assign real_photo = pv.photo -%}
 <div class="about{% if include.compact %} about--compact{% endif %}">
-  <div class="about__photo"><img src="{{ pf.photo | relative_url }}" alt="{{ pf.name }} 프로필"></div>
+  <div class="about__photo{% if real_photo %} about__photo--real{% endif %}"><img src="{{ real_photo | default: pf.photo | relative_url }}" alt="{{ pf.name }} 프로필"></div>
   <div>
     <p class="about__title"><em>경력 {{ include.years }}년</em> {{ pf.role }}</p>
     <p class="about__tagline"><strong>{{ pf.name }}</strong> · {{ pf.portfolio.tagline }}</p>
