@@ -1,8 +1,6 @@
 /* custom: 이력서·포트폴리오 인쇄(PDF) — 테마 print 스타일 위에 덮어쓴다 */
-@page {
-  size: A4;
-  margin: 14mm 13mm;
-}
+
+/* 페이지 크기는 레이아웃별 <style>@page</style>로 지정한다: 이력서 A4 세로, 포트폴리오 1280×720 */
 
 @media print {
   .cv-page {
@@ -13,17 +11,10 @@
       margin: 0;
     }
 
-    #main.cv {
-      max-width: none;
-      margin: 0;
-      padding: 0;
-      font-size: 10pt;
-    }
-
-    /* 테마는 링크를 검정 밑줄 + "(주소)"로 바꾸는데, PDF에서는 링크가 클릭되므로 원래 색만 유지한다 */
+    /* 테마는 링크를 검정 밑줄 + "(주소)"로 바꾸는데, PDF에서는 링크가 클릭되므로 원래 모양을 유지한다 */
     .cv a,
     .cv a:visited {
-      color: var(--accent);
+      color: var(--cv-accent-dark);
       text-decoration: none;
     }
 
@@ -31,73 +22,99 @@
       content: none !important;
     }
 
-    .cv .featured-card__title,
-    .cv .resume-head__name,
-    .cv .cv-cover__title,
-    .cv .cv-case__title,
-    .cv .home-section__title {
-      color: var(--text);
-    }
-
     .cv ul,
-    .cv li {
+    .cv ol,
+    .cv li,
+    .cv a {
       page-break-inside: auto;
     }
 
-    .cv li {
-      break-inside: avoid;
+    .cv h1,
+    .cv h2,
+    .cv h3,
+    .cv h4,
+    .cv h5 {
+      color: inherit;
+      margin-top: 0;
     }
 
-    .resume-head__photo {
-      width: 96px;
-      height: 96px;
+    .cv pre {
+      white-space: pre !important;
     }
+  }
+
+  /* 이력서 */
+  #main.cv--resume {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
 
     .home-section {
       margin-top: 1.8em;
     }
 
-    .resume-job__head {
+    .home-section__title {
+      font-size: 1.5em;
+    }
+
+    .resume-project__name {
+      font-size: 1.1em;
+    }
+
+    .resume-job__company {
+      font-size: 1.35em;
+    }
+
+    /* 회사명·프로젝트 제목은 다음 내용과 붙여 두고, 긴 프로젝트 카드는 쪽 사이에서 나뉠 수 있게 한다 */
+    .resume-job__head,
+    .resume-job__desc,
+    .resume-project__head,
+    .resume-project__desc,
+    .resume-project__team {
       break-after: avoid;
     }
 
-    .resume-project,
-    .resume-card,
+    .resume-project {
+      break-inside: auto;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
     .cv-keep,
-    .cv-case__box,
-    .cv-case__section,
-    .cv-case__meta,
-    .resume-project__posts {
+    .resume-project__posts,
+    .resume-project__stack {
       break-inside: avoid;
     }
 
-    /* 케이스·협업 섹션은 새 페이지에서 시작 */
-    .cv-case,
-    .cv-page-break {
-      break-before: page;
-      margin-top: 0;
-      padding-top: 0;
-      border-top: 0;
-    }
-
-    .cv-case__head {
-      grid-template-columns: minmax(0, 1fr) 16em;
-    }
-
-    .cv-case__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .cv-cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .featured-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .cv li {
+      break-inside: avoid;
     }
 
     .resume-skills {
       grid-template-columns: 8em 1fr;
+    }
+  }
+
+  /* 포트폴리오 */
+  #main.cv--portfolio {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    min-height: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    break-after: page;
+    break-inside: avoid;
+
+    &:last-of-type {
+      break-after: auto;
     }
   }
 }

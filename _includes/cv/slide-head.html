@@ -1,0 +1,23 @@
+{%- comment -%}
+  슬라이드 상단 제목. include.eyebrow(영문 라벨), include.title(HTML 허용), include.sub(제목 옆 보조 문구),
+  include.aside(오른쪽 문구, **굵게** 허용), include.project가 있으면 오른쪽에 프로젝트 정보 박스를 그린다.
+{%- endcomment -%}
+<header class="slide__head">
+  <div class="slide__head-main">
+    <p class="slide__eyebrow">{{ include.eyebrow }}</p>
+    <h2 class="slide__title">{{ include.title }}{% if include.sub %} <span class="slide__title-sub">{{ include.sub }}</span>{% endif %}</h2>
+  </div>
+  {%- if include.project %}
+    {%- assign hp = include.project -%}
+    {%- assign hjob = nil -%}
+    {%- for j in site.data.career -%}{%- if j.projects contains hp.id -%}{%- assign hjob = j -%}{%- endif -%}{%- endfor %}
+  <dl class="slide__info">
+    <dt>프로젝트</dt><dd>{{ hp.name }}{% if hjob %} <span class="slide__info-sub">({% include cv/company-name.html job=hjob %})</span>{% endif %}</dd>
+    <dt>기간</dt><dd class="slide__info-period">{% include cv/period.html start=hp.start end=hp.end ongoing="진행 중" %}</dd>
+    {%- if hp.team and hp.team != "" %}{% unless hp.team contains "TODO:" %}<dt>개발 인원</dt><dd>{{ hp.team }}</dd>{% endunless %}{% endif %}
+    <dt>기술 스택</dt><dd class="slide__info-stack">{{ hp.stack | join: " · " }}</dd>
+  </dl>
+  {%- elsif include.aside %}
+  <p class="slide__aside">{% include cv/md.html text=include.aside %}</p>
+  {%- endif %}
+</header>

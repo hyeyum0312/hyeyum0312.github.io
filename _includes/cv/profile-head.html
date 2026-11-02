@@ -1,0 +1,27 @@
+{%- comment -%}
+  이력서 상단과 포트폴리오 About Me가 함께 쓰는 프로필 영역.
+  include.years: 연차, include.compact: 이력서처럼 사진을 작게.
+  전화번호·상세 주소는 _data/private.yml이 있을 때만(로컬 PDF 빌드) 출력한다.
+{%- endcomment -%}
+{%- assign pf = site.data.profile -%}
+{%- assign pv = site.data.private -%}
+<div class="about{% if include.compact %} about--compact{% endif %}">
+  <div class="about__photo"><img src="{{ pf.photo | relative_url }}" alt="{{ pf.name }} 프로필"></div>
+  <div>
+    <p class="about__title"><em>{{ include.years }}년차</em> {{ pf.portfolio.title_role }}</p>
+    <p class="about__tagline"><strong>{{ pf.name }}</strong> · {{ pf.portfolio.tagline }}</p>
+    <ul class="about__contacts">
+      <li><i class="fas fa-envelope" aria-hidden="true"></i><a href="mailto:{{ pf.email }}">{{ pf.email }}</a></li>
+      {%- if pv.phone and pv.phone != "" %}
+      <li><i class="fas fa-phone" aria-hidden="true"></i><a href="tel:{{ pv.phone | remove: '.' | remove: '-' }}">{{ pv.phone }}</a></li>
+      {%- endif %}
+      {%- if pv.birth and pv.birth != "" %}
+      <li><i class="fas fa-birthday-cake" aria-hidden="true"></i>{{ pv.birth }}</li>
+      {%- endif %}
+      <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>{% if pv.address and pv.address != "" %}{{ pv.address }}{% else %}{{ pf.location }}{% endif %}</li>
+      <li><i class="fas fa-link" aria-hidden="true"></i><a href="{{ pf.github }}">GitHub</a><span class="about__sep">|</span><a href="{{ pf.blog }}">Blog</a></li>
+    </ul>
+    <p class="section-label">주요 경험 · 강점</p>
+    {% include cv/list.html items=pf.highlights class="checks" %}
+  </div>
+</div>

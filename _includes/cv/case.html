@@ -1,84 +1,111 @@
 {%- comment -%}
-  포트폴리오 케이스 스터디 한 건. 소속·기간·인원·기술 스택은 cases.yml이 아니라 프로젝트·경력 데이터에서 읽는다.
+  케이스 스터디 슬라이드. 기간·인원·기술 스택은 projects.yml에서 읽는다.
+  - 1장: 문제 / 해결 + (상황 · Before · After 카드가 있으면) 하단 카드
+  - 2장: 처리 흐름 + 설계 포인트 · 결과 · 배운 점
+  하단 카드도 처리 흐름도 없으면 설계 포인트 · 결과까지 1장에 담는다.
 {%- endcomment -%}
 {%- assign c = include.case -%}
 {%- assign cp = site.data.projects | where: "id", c.project | first -%}
-{%- assign cjob = nil -%}
-{%- for j in site.data.career -%}{%- if j.projects contains c.project -%}{%- assign cjob = j -%}{%- endif -%}{%- endfor -%}
-<article class="cv-case" id="{{ c.id }}">
-  <header class="cv-case__head">
-    <div>
-      <p class="cv-case__eyebrow">Case {{ include.index }} · {{ cp.name }}</p>
-      <h2 class="cv-case__title">{{ c.title }}</h2>
-      <p class="cv-case__summary">{{ c.summary }}</p>
-      {%- if c.keywords.size > 0 %}
-      <ul class="home-hero__stack cv-case__keywords">{% for k in c.keywords %}<li>{{ k }}</li>{% endfor %}</ul>
+{%- capture case_title %}<span class="slide__project">PROJECT</span> <em>#{{ include.index }}</em> {{ c.title }}{% endcapture -%}
+{%- assign has_cards = false -%}
+{%- if c.context or c.before or c.after -%}{%- assign has_cards = true -%}{%- endif -%}
+{%- assign has_flow = false -%}
+{%- if c.flow and c.flow.size > 0 -%}{%- assign has_flow = true -%}{%- endif -%}
+
+<section class="slide slide--case" id="{{ c.id }}">
+  {% include cv/slide-head.html eyebrow="Case Study · Frontend" title=case_title project=cp %}
+
+  <div class="slide__row slide__row--2">
+    <div class="card">
+      <span class="badge badge--problem">문제 · Problem</span>
+      {% include cv/list.html items=c.problem class="card__text" %}
+    </div>
+    <div class="card card--tint">
+      <span class="badge badge--solution">해결 · Solution</span>
+      {% include cv/list.html items=c.solution class="card__text" %}
+    </div>
+  </div>
+
+  {%- if has_cards %}
+  <div class="slide__row slide__row--cards">
+    {%- if c.context %}
+    <div class="card">
+      <h3 class="card__title"><span class="mark mark--dark">!</span>{{ c.context.title }}<small>{{ c.context.note }}</small></h3>
+      <ul class="kv">
+        {%- for r in c.context.rows %}<li><code>{{ r.name }}</code><span>{% include cv/md.html text=r.value %}</span></li>{% endfor %}
+      </ul>
+      {%- if c.context.steps %}
+      <ol class="steps">{% for t in c.context.steps %}<li>{{ t }}</li>{% endfor %}</ol>
       {%- endif %}
     </div>
-    <dl class="cv-case__meta">
-      {%- if cjob %}<dt>소속</dt><dd>{% include cv/company-name.html job=cjob %}</dd>{% endif %}
-      <dt>프로젝트</dt><dd>{{ cp.name }}</dd>
-      <dt>기간</dt><dd>{% include cv/period.html start=cp.start end=cp.end ongoing="진행 중" %}</dd>
-      {%- if cp.team and cp.team != "" %}{% unless cp.team contains "TODO:" %}<dt>개발 인원</dt><dd>{{ cp.team }}</dd>{% endunless %}{% endif %}
-      <dt>기술 스택</dt><dd>{{ cp.stack | join: " · " }}</dd>
-    </dl>
-  </header>
-
-  <div class="cv-case__grid">
-    <section class="cv-case__box cv-case__box--problem">
-      <h3>문제</h3>
-      {% include cv/list.html items=c.problem class="cv-case__list" %}
-    </section>
-    <section class="cv-case__box cv-case__box--solution">
-      <h3>해결</h3>
-      {% include cv/list.html items=c.solution class="cv-case__list" %}
-    </section>
+    {%- endif %}
+    {%- if c.before %}
+    <div class="card card--split">
+      <h3 class="card__title"><span class="mark mark--red">B</span>Before<small>{{ c.before.note }}</small></h3>
+      {%- if c.before.code %}<pre class="tree">{{ c.before.code | strip }}</pre>{% endif %}
+      {% include cv/list.html items=c.before.items class="card__list card__list--x" %}
+      <p class="verdict verdict--bad"><b>문제</b>{{ c.before.verdict }}</p>
+    </div>
+    {%- endif %}
+    {%- if c.after %}
+    <div class="card card--split card--tint">
+      <h3 class="card__title"><span class="mark mark--accent">A</span>After<small>{{ c.after.note }}</small></h3>
+      {% include cv/list.html items=c.after.items class="card__list card__list--check" %}
+      <p class="verdict verdict--good"><b>효과</b>{{ c.after.verdict }}</p>
+    </div>
+    {%- endif %}
   </div>
-
-  {%- if c.flow %}
-  <section class="cv-case__section">
-    <h3>처리 흐름</h3>
-    <ol class="cv-flow">
-      {%- for step in c.flow %}<li>{{ step }}</li>{% endfor %}
-    </ol>
-  </section>
   {%- endif %}
 
-  {%- assign rows = "" | split: "" -%}
-  {%- for r in c.policy_table -%}{%- unless r.situation contains "TODO:" -%}{%- assign rows = rows | push: r -%}{%- endunless -%}{%- endfor -%}
-  {%- if rows.size > 0 %}
-  <section class="cv-case__section">
-    <h3>대표 케이스</h3>
-    <table class="cv-table">
-      <thead><tr><th>응답 상황</th><th>화면 표시</th><th>알림 후보 처리</th></tr></thead>
-      <tbody>
-        {%- for r in rows %}<tr><td>{{ r.situation }}</td><td>{{ r.display }}</td><td>{{ r.alert }}</td></tr>{% endfor %}
-      </tbody>
-    </table>
-  </section>
-  {%- endif %}
-
-  <div class="cv-case__grid">
-    <section class="cv-case__section">
-      <h3>설계 포인트</h3>
-      {% include cv/list.html items=c.design_points class="cv-case__list cv-case__list--check" %}
-    </section>
-    <section class="cv-case__section">
-      <h3>결과</h3>
-      {% include cv/list.html items=c.result class="cv-case__list cv-case__list--check" %}
-    </section>
+  {%- unless has_cards or has_flow %}
+  <div class="slide__row slide__row--2">
+    <div class="card">
+      <h3 class="card__title">설계 포인트<small>Design</small></h3>
+      {% include cv/list.html items=c.design_points class="card__list card__list--check" %}
+    </div>
+    <div class="card">
+      <h3 class="card__title">결과<small>Result</small></h3>
+      {% include cv/list.html items=c.result class="card__list card__list--check" %}
+      {% include cv/related-posts.html urls=c.posts absolute=true title="근거가 된 블로그 글" %}
+    </div>
   </div>
+  {%- endunless %}
+</section>
 
-  {%- assign learned_shown = false -%}
-  {%- for t in c.learned -%}{%- unless t contains "TODO:" -%}{%- assign learned_shown = true -%}{%- endunless -%}{%- endfor -%}
-  {%- if learned_shown %}
-  <section class="cv-case__section">
-    <h3>배운 점</h3>
-    <blockquote class="cv-case__learned">
-      {%- for t in c.learned %}{% unless t contains "TODO:" %}<p>{{ t }}</p>{% endunless %}{% endfor -%}
-    </blockquote>
-  </section>
-  {%- endif %}
+{%- if has_cards or has_flow %}
+<section class="slide slide--case">
+  {% include cv/slide-head.html eyebrow="Architecture & Result" title=case_title project=cp %}
 
-  {% include cv/related-posts.html urls=c.posts absolute=true title="근거가 된 블로그 글" %}
-</article>
+  <div class="slide__row{% if has_flow %} slide__row--flow{% endif %}">
+    {%- if has_flow %}
+    <div class="card">
+      <h3 class="card__title">처리 흐름<small>Flow</small></h3>
+      <ol class="flow">
+        {%- for step in c.flow %}<li>{% include cv/md.html text=step %}</li>{% endfor %}
+      </ol>
+    </div>
+    {%- endif %}
+    <div class="slide__stack">
+      <div>
+        <h3 class="section-label">설계 포인트<small>Design</small></h3>
+        {% include cv/list.html items=c.design_points class="card__list card__list--check" %}
+      </div>
+      <div>
+        <h3 class="section-label">결과<small>Result</small></h3>
+        {% include cv/list.html items=c.result class="card__list card__list--check" %}
+      </div>
+      {%- assign learned_shown = false -%}
+      {%- for t in c.learned -%}{%- unless t contains "TODO:" -%}{%- assign learned_shown = true -%}{%- endunless -%}{%- endfor -%}
+      {%- if learned_shown %}
+      <div>
+        <h3 class="section-label">배운 점<small>Takeaway</small></h3>
+        <blockquote class="takeaway">
+          {%- for t in c.learned %}{% unless t contains "TODO:" %}<p>{% include cv/md.html text=t %}</p>{% endunless %}{% endfor -%}
+        </blockquote>
+      </div>
+      {%- endif %}
+      {% include cv/related-posts.html urls=c.posts absolute=true title="근거가 된 블로그 글" %}
+    </div>
+  </div>
+</section>
+{%- endif -%}

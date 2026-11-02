@@ -7,7 +7,7 @@
 <ul class="{{ include.class }}">
   {%- for t in include.items -%}
     {%- unless t contains "TODO:" %}
-  <li>{{ t }}</li>
+  <li>{% include cv/md.html text=t %}</li>
     {%- endunless -%}
   {%- endfor %}
 </ul>

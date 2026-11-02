@@ -1,364 +1,1533 @@
-/* custom: 이력서·포트폴리오 공통 */
-.cv__headline {
-  margin: 0.6em 0 0;
-  font-size: 1em;
-  font-weight: 600;
-  line-height: 1.6;
-}
+/* custom: 이력서·포트폴리오 공통 — 기존 포트폴리오(남색 포인트, 고정폭 라벨, 흰 카드) 스타일 */
+.cv {
+  --cv-accent: #46618f;
+  --cv-accent-dark: #2f4670;
+  --cv-accent-soft: #e9eef6;
+  --cv-ink: #15171c;
+  --cv-muted: #6b7280;
+  --cv-line: #e3e6ec;
+  --cv-bg: #f0f1f5;
+  --cv-red: #c92a2a;
+  --cv-red-soft: #fbeceb;
+  --cv-green: #1e8a4c;
+  --cv-green-soft: #e4f4ea;
+  --cv-dark: #1d2129;
+  --cv-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
 
-.cv__more {
-  margin: 3em 0 0;
-  color: var(--muted);
-  font-size: 0.85em;
+  /* 블로그 공통 클래스(.resume-*, .home-*)가 쓰는 토큰도 남색으로 */
+  --accent: var(--cv-accent);
+  --accent-soft: var(--cv-accent-soft);
+  --text: var(--cv-ink);
+  --muted: var(--cv-muted);
+  --border: var(--cv-line);
+  --surface: #f7f8fa;
+
+  color: var(--cv-ink);
 
   a {
+    color: var(--cv-accent-dark);
+    text-decoration: none;
+  }
+
+  code {
+    padding: 0.05em 0.4em;
+    border-radius: 4px;
+    background: var(--cv-accent-soft);
+    color: var(--cv-accent-dark);
+    font-family: var(--cv-mono);
+    font-size: 0.86em;
     font-weight: 700;
+  }
+
+  strong {
+    font-weight: 800;
   }
 }
 
-.cv-checklist {
-  margin: 1.25em 0 0;
+.resume-job__role {
+  color: var(--muted);
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+/* 영문 라벨: — PROFILE */
+.cv-eyebrow,
+.slide__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0 0 0.35em;
+  color: var(--cv-accent);
+  font-family: var(--cv-mono);
+  font-size: 0.72em;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  &::before {
+    content: "";
+    width: 1.6em;
+    height: 2px;
+    background: currentColor;
+  }
+}
+
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6em;
+  margin: 0 0 0.6em;
+  font-size: 0.95em;
+  font-weight: 800;
+
+  small {
+    color: var(--cv-muted);
+    font-family: var(--cv-mono);
+    font-size: 0.7em;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+}
+
+/* 체크 목록: 남색 네모 체크 */
+.checks {
+  margin: 0;
   padding: 0;
   list-style: none;
 
   li {
     position: relative;
-    margin: 0 0 0.45em;
-    padding-left: 1.6em;
-    font-size: 0.9em;
-    font-weight: 600;
-    line-height: 1.6;
+    margin: 0 0 0.55em;
+    padding-left: 2em;
+    color: #3b4250;
+    font-size: 0.95em;
+    line-height: 1.55;
 
     &::before {
       content: "✓";
       position: absolute;
+      top: 0.05em;
+      left: 0;
+      width: 1.35em;
+      height: 1.35em;
+      border-radius: 5px;
+      background: var(--cv-accent);
+      color: #fff;
+      font-size: 0.85em;
+      font-weight: 800;
+      line-height: 1.35em;
+      text-align: center;
+    }
+  }
+
+  strong {
+    color: var(--cv-ink);
+  }
+}
+
+/* 일반 목록: 작은 체크 / 엑스 */
+.card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin: 0 0 0.5em;
+    padding-left: 1.7em;
+    font-size: 0.88em;
+    line-height: 1.6;
+
+    &::before {
+      position: absolute;
       top: 0.15em;
       left: 0;
-      width: 1.15em;
-      height: 1.15em;
+      width: 1.2em;
+      height: 1.2em;
       border-radius: 4px;
-      background: var(--accent);
-      color: #fff;
       font-size: 0.8em;
-      line-height: 1.15em;
+      font-weight: 800;
+      line-height: 1.2em;
       text-align: center;
+    }
+  }
+
+  &--check li::before {
+    content: "✓";
+    background: var(--cv-accent-soft);
+    color: var(--cv-accent);
+  }
+
+  &--x li::before {
+    content: "✕";
+    background: var(--cv-red-soft);
+    color: var(--cv-red);
+  }
+
+  &--sm li {
+    margin-bottom: 0.2em;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+/* 기술 칩: 고정폭, 핵심 기술은 채움 */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  margin: 0 0 1.1em;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    margin: 0;
+    padding: 0.35em 0.8em;
+    border: 1px solid var(--cv-line);
+    border-radius: 8px;
+    background: #fff;
+    font-family: var(--cv-mono);
+    font-size: 0.78em;
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgba(21, 23, 28, 0.05);
+
+    &--fill {
+      border-color: var(--cv-accent);
+      background: var(--cv-accent);
+      color: #fff;
+    }
+  }
+
+  &--sm {
+    margin: 0;
+
+    .chips__item {
+      padding: 0.25em 0.6em;
+      background: var(--cv-accent-soft);
+      border-color: transparent;
+      color: var(--cv-accent-dark);
+      font-size: 0.68em;
+      box-shadow: none;
     }
   }
 }
 
-.resume-job__desc {
-  margin: 0.6em 0 0;
-  color: var(--muted);
-  font-size: 0.85em;
+.tag {
+  padding: 0.15em 0.6em;
+  border-radius: 5px;
+  background: var(--cv-accent-soft);
+  color: var(--cv-accent-dark);
+  font-size: 0.75em;
+  font-weight: 700;
 }
 
-.cv--resume .resume-project__tasks ul {
-  margin-top: 0;
-}
+.cv .resume-project__posts {
+  margin-top: 1em;
+  padding: 0.8em 1em;
+  border-radius: 10px;
+  background: var(--cv-accent-soft);
 
-/* custom: 포트폴리오 표지 */
-.cv-cover {
-  padding-bottom: 2.5em;
-  border-bottom: 1px solid var(--border);
-
-  &__title {
-    margin: 0;
-    font-size: 2.4em;
+  h5 {
+    margin: 0 0 0.4em;
+    color: var(--cv-muted);
+    font-family: var(--cv-mono);
+    font-size: 0.68em;
     font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-}
-
-.cv-toc {
-  margin-top: 2em;
-  padding: 1.25em 1.4em;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-
-  &__title {
-    margin: 0 0 0.75em;
-    color: var(--accent);
-    font-size: 0.8em;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  ol {
-    margin: 0;
-    padding-left: 1.4em;
-  }
-
-  li {
-    margin-bottom: 0.35em;
-    font-size: 0.95em;
-    font-weight: 700;
+    letter-spacing: 0.1em;
   }
 
   a {
-    color: var(--text);
-  }
-
-  &__project {
-    margin-right: 0.6em;
-    color: var(--muted);
-    font-size: 0.85em;
+    display: block;
+    margin-top: 0.25em;
+    font-size: 0.82em;
     font-weight: 600;
   }
 }
 
-/* custom: 케이스 스터디 */
-.cv-case,
-.cv-section {
-  margin-top: 4em;
-  padding-top: 2.5em;
-  border-top: 2px solid var(--text);
-}
+/* ==========================================================================
+   이력서 (A4 세로)
+   ========================================================================== */
+.cv--resume {
+  .cv-resume-head {
+    margin-bottom: 1.4em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid var(--cv-line);
 
-.cv-case {
-  &__head {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 17em;
-    gap: 1.5em;
-    align-items: start;
+    &__name {
+      margin: 0;
+      font-size: 3em;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+    }
 
-    @media (max-width: 760px) {
-      grid-template-columns: 1fr;
+    .resume-head__career {
+      margin: 0.3em 0 0;
+      color: var(--cv-muted);
+      font-size: 0.9em;
+      font-weight: 700;
     }
   }
 
-  &__eyebrow {
-    margin: 0 0 0.4em;
-    color: var(--accent);
-    font-size: 0.75em;
+  .home-section__title {
+    position: relative;
+    margin: 0 0 1em;
+    padding-bottom: 0.45em;
+    border-bottom: 1px solid var(--cv-line);
+    font-size: 1.6em;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 5em;
+      height: 2px;
+      background: var(--cv-accent);
+    }
+  }
+
+  .resume-intro {
+    margin-bottom: 1.2em;
+  }
+
+  .resume-job {
+    margin-bottom: 2em;
+
+    &__head {
+      align-items: center;
+      padding-bottom: 0.6em;
+      border-bottom: 0;
+    }
+
+    &__company {
+      font-size: 1.35em;
+      font-weight: 900;
+    }
+
+    &__role {
+      padding: 0.15em 0.6em;
+      border-radius: 5px;
+      background: var(--cv-accent-soft);
+      color: var(--cv-accent-dark);
+      font-size: 0.75em;
+      font-weight: 700;
+    }
+
+    &__meta {
+      margin-left: auto;
+      color: var(--cv-accent);
+      font-family: var(--cv-mono);
+      font-size: 0.75em;
+      font-weight: 700;
+    }
+
+    &__desc {
+      margin: 0 0 0.75em;
+      color: var(--cv-muted);
+      font-size: 0.85em;
+    }
+  }
+
+  .resume-project {
+    margin-bottom: 0.9em;
+    padding: 1.2em 1.4em;
+    border: 1px solid var(--cv-line);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(21, 23, 28, 0.04);
+
+    &__name {
+      color: var(--cv-ink);
+      font-size: 1.1em;
+      font-weight: 900;
+    }
+
+    .resume-job__meta {
+      margin-left: 0;
+    }
+
+    &__desc {
+      color: #3b4250;
+    }
+
+    &__stack {
+      @extend .chips;
+      margin: 0.75em 0 0;
+
+      li {
+        @extend .chips__item;
+        padding: 0.2em 0.6em;
+        border-radius: 6px;
+        font-size: 0.7em;
+      }
+    }
+
+    &__achievements {
+      @extend .card__list;
+      @extend .card__list--check;
+      margin-top: 1em;
+    }
+
+    &__tasks h5 {
+      margin: 0.9em 0 0.4em;
+      color: var(--cv-muted);
+      font-family: var(--cv-mono);
+      font-size: 0.68em;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  .resume-skills {
+    dt {
+      font-family: var(--cv-mono);
+      font-size: 0.75em;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .chips {
+      margin: 0;
+    }
+  }
+
+  .checks li {
+    font-size: 0.9em;
+  }
+}
+
+.cv__more {
+  margin: 3em 0 0;
+  color: var(--cv-muted);
+  font-size: 0.85em;
+
+  a {
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  }
+}
+
+/* ==========================================================================
+   포트폴리오 (16:9 슬라이드) — 인쇄 시 한 장 = 1280×720px
+   ========================================================================== */
+/* 테마 #main의 최대 폭(1280px)을 풀어 화면 가로를 꽉 채운다 */
+#main.cv--portfolio {
+  max-width: none;
+  padding: 1.5em 1.5em 4em;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 720px;
+  margin: 0 0 1.5em;
+  padding: 40px 56px 30px;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--cv-bg);
+  font-size: 16px;
+  box-shadow: 0 1px 3px rgba(21, 23, 28, 0.06), 0 12px 32px rgba(21, 23, 28, 0.06);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--cv-accent), #8ea3c6 70%, #c9d3e4);
+  }
+
+  @media screen and (max-width: 900px) {
+    min-height: 0;
+    padding: 36px 20px 28px;
+    border-radius: 14px;
+  }
+
+  &__head {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2em;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--cv-line);
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 168px;
+      height: 2px;
+      background: var(--cv-accent);
+    }
+
+    @media screen and (max-width: 900px) {
+      flex-direction: column;
+      gap: 1em;
+    }
   }
 
   &__title {
     margin: 0;
-    font-size: 1.6em;
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+
+    em {
+      margin: 0 0.15em;
+      color: var(--cv-accent);
+      font-style: normal;
+    }
+
+    @media screen and (max-width: 900px) {
+      font-size: 30px;
+    }
+  }
+
+  &__project {
+    font-family: var(--cv-mono);
     font-weight: 800;
-    line-height: 1.35;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
   }
 
-  &__summary {
-    margin: 0.6em 0 0;
-    color: var(--muted);
-    font-size: 0.95em;
-    line-height: 1.7;
+  &--case .slide__title {
+    font-size: 36px;
   }
 
-  &__keywords {
-    margin-top: 0.9em;
+  &__title-sub {
+    margin-left: 0.3em;
+    color: #9aa1ad;
+    font-family: var(--cv-mono);
+    font-size: 0.5em;
+    font-weight: 700;
+    letter-spacing: 0;
   }
 
-  &__meta {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.35em 1em;
+  &__aside {
+    max-width: 28em;
     margin: 0;
-    padding: 1em 1.2em;
-    border: 1px solid var(--border);
+    padding-top: 1.6em;
+    color: #3b4250;
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: right;
+
+    strong {
+      color: var(--cv-accent-dark);
+    }
+
+    @media screen and (max-width: 900px) {
+      padding-top: 0;
+      text-align: left;
+    }
+  }
+
+  &__info {
+    display: grid;
+    flex: none;
+    grid-template-columns: auto auto;
+    gap: 2px 18px;
+    max-width: 480px;
+    margin: 0;
+    padding: 10px 16px;
+    border: 1px solid var(--cv-line);
     border-radius: 12px;
     background: #fff;
-    font-size: 0.78em;
+    font-size: 11.5px;
 
     dt {
-      color: var(--muted);
+      color: var(--cv-muted);
       font-weight: 600;
     }
 
     dd {
       margin: 0;
-      font-weight: 600;
+      font-weight: 700;
       text-align: right;
-      font-variant-numeric: tabular-nums;
     }
   }
 
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
-    margin-top: 1.5em;
-
-    @media (max-width: 640px) {
-      grid-template-columns: 1fr;
-    }
-
-    .cv-case__section {
-      margin-top: 0;
-    }
+  &__info-sub {
+    color: var(--cv-muted);
+    font-weight: 600;
   }
 
-  &__box {
-    padding: 1.2em 1.3em;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    &--problem {
-      border-color: #f3d4d4;
-      background: #fdf5f5;
-
-      h3 {
-        color: #c92a2a;
-      }
-    }
-
-    &--solution {
-      background: var(--accent-soft);
-    }
+  &__info-period {
+    color: var(--cv-accent);
+    font-family: var(--cv-mono);
   }
 
-  &__section {
-    margin-top: 1.5em;
+  &__info-stack {
+    font-family: var(--cv-mono);
+    font-size: 10.5px;
   }
 
-  h3 {
-    margin: 0 0 0.6em;
-    font-size: 0.95em;
+  &__corner {
+    position: absolute;
+    top: 36px;
+    left: 48px;
+    color: #6b7280;
+    font-family: var(--cv-mono);
+    font-size: 13px;
     font-weight: 800;
-    letter-spacing: -0.01em;
-  }
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
 
-  &__list {
-    margin: 0;
-    padding-left: 1.1em;
-
-    li {
-      margin-bottom: 0.4em;
-      font-size: 0.88em;
-      line-height: 1.65;
+    &--right {
+      right: 48px;
+      left: auto;
+      color: var(--cv-accent);
     }
 
-    &--check {
-      padding-left: 0;
-      list-style: none;
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
+  }
 
-      li {
-        position: relative;
-        padding-left: 1.4em;
+  &__row {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 14px;
 
-        &::before {
-          content: "✓";
-          position: absolute;
-          left: 0;
-          color: var(--accent);
-          font-weight: 800;
-        }
+    &--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &--cards {
+      flex: 1;
+      grid-auto-columns: minmax(0, 1fr);
+      grid-auto-flow: column;
+    }
+
+    &--flow {
+      flex: 1;
+      grid-template-columns: 5fr 7fr;
+      gap: 28px;
+    }
+
+    @media screen and (max-width: 900px) {
+      &--2,
+      &--flow {
+        grid-template-columns: 1fr;
+      }
+
+      &--cards {
+        grid-auto-flow: row;
       }
     }
   }
 
-  &__learned {
-    margin: 0;
-    padding: 0.9em 1.2em;
-    border-left: 4px solid var(--accent);
-    border-radius: 0 10px 10px 0;
-    background: var(--surface);
-    font-style: normal;
-
-    p {
-      margin: 0;
-      font-size: 0.9em;
-      font-weight: 600;
-      line-height: 1.7;
-    }
-  }
-
-  .resume-project__posts {
-    margin-top: 1.5em;
+  &__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 }
 
-/* 처리 흐름: 단계마다 화살표로 잇는다 */
-.cv-flow {
-  display: flex;
-  flex-wrap: wrap;
+.card {
+  padding: 16px 20px;
+  border: 1px solid var(--cv-line);
+  border-radius: 14px;
+  background: #fff;
+
+  &--tint {
+    background: linear-gradient(180deg, #f3f6fa, #fff 70%);
+  }
+
+  &--split {
+    display: flex;
+    flex-direction: column;
+
+    .verdict {
+      margin-top: auto;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0 0 0.35em;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 16px;
+    font-weight: 800;
+
+    small {
+      margin-left: auto;
+      color: var(--cv-muted);
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+  }
+
+  .card__list li {
+    margin-bottom: 0.35em;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+}
+
+.badge {
+  display: inline-flex;
   align-items: center;
-  gap: 0.5em 0;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding: 3px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+
+  &::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  &--problem {
+    background: var(--cv-red-soft);
+    color: var(--cv-red);
+  }
+
+  &--solution {
+    background: var(--cv-accent-soft);
+    color: var(--cv-accent-dark);
+  }
+}
+
+.mark {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  color: #fff;
+  font-family: var(--cv-mono);
+  font-size: 11px;
+  font-weight: 800;
+
+  &--dark { background: var(--cv-dark); }
+  &--red { background: #d9534f; }
+  &--accent { background: var(--cv-accent); }
+}
+
+.kv {
   margin: 0;
   padding: 0;
   list-style: none;
-  counter-reset: flow;
 
   li {
-    display: flex;
+    display: grid;
+    grid-template-columns: 9.5em 1fr;
+    gap: 10px;
     align-items: center;
-    margin: 0;
-    font-size: 0.8em;
-    font-weight: 600;
-    counter-increment: flow;
+    margin: 0 0 6px;
+    padding: 6px 12px;
+    border: 1px solid var(--cv-line);
+    border-radius: 10px;
+    background: #fafbfc;
+    font-size: 12px;
+    line-height: 1.45;
 
-    &::before {
-      content: counter(flow);
-      flex: none;
-      width: 1.6em;
-      height: 1.6em;
-      margin-right: 0.45em;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.85em;
-      line-height: 1.6em;
-      text-align: center;
+    &:first-child {
+      border-color: #cfd8e6;
+      background: var(--cv-accent-soft);
     }
+  }
+
+  code {
+    padding: 0;
+    background: none;
+    color: var(--cv-ink);
+    font-size: 13px;
+  }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 12px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    margin: 0;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+}
+
+.tree {
+  margin: 0 0 12px;
+  padding: 0;
+  background: none;
+  color: var(--cv-ink);
+  font-family: var(--cv-mono);
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.verdict {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+
+  &--bad {
+    background: var(--cv-red-soft);
+    color: var(--cv-red);
+  }
+
+  &--good {
+    background: var(--cv-green-soft);
+    color: var(--cv-green);
+  }
+}
+
+/* 세로 처리 흐름 */
+.flow {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin: 0 0 18px;
+    padding: 8px 12px;
+    border: 1px solid var(--cv-line);
+    border-radius: 10px;
+    background: #fafbfc;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.45;
+    text-align: center;
 
     &:not(:last-child)::after {
-      content: "→";
-      margin: 0 0.7em;
-      color: var(--muted);
+      content: "↓";
+      position: absolute;
+      bottom: -17px;
+      left: 50%;
+      color: #9aa1ad;
+      font-size: 13px;
+      transform: translateX(-50%);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+      border-color: #bfe3cc;
+      background: var(--cv-green-soft);
+      color: var(--cv-green);
     }
   }
 }
 
-.cv-table {
-  display: table;
-  width: 100%;
-  font-size: 0.82em;
+.takeaway {
+  margin: 0;
+  padding: 10px 16px;
+  border: 1px solid var(--cv-line);
+  border-left: 4px solid var(--cv-accent);
+  border-radius: 0 14px 14px 0;
+  background: #fff;
+  font-style: normal;
 
-  th {
-    background: var(--surface);
-    text-align: left;
+  p {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.6;
   }
 }
 
-/* 협업·회고 카드 */
-.cv-cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1em;
-  margin-top: 1.5em;
+/* 표지·마지막 장 */
+.slide--hero {
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 45%, rgba(70, 97, 143, 0.08), transparent 70%),
+    repeating-linear-gradient(0deg, rgba(21, 23, 28, 0.035) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(90deg, rgba(21, 23, 28, 0.035) 0 1px, transparent 1px 48px),
+    var(--cv-bg);
 
-  @media (max-width: 760px) {
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #c9d3e4, #8ea3c6 30%, var(--cv-accent));
+  }
+}
+
+.hero {
+  text-align: center;
+
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 5em;
+    margin: 0 0 14px;
+    color: var(--cv-accent);
+    font-family: var(--cv-mono);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.3em;
+    line-height: 1.25;
+    text-transform: uppercase;
+
+    &::before,
+    &::after {
+      content: "";
+      width: 3em;
+      height: 2px;
+      background: currentColor;
+    }
+
+    @media screen and (max-width: 900px) {
+      gap: 1.5em;
+      font-size: 12px;
+    }
+  }
+
+  &__word {
+    margin: 0;
+    font-size: 148px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+
+    @media screen and (max-width: 900px) {
+      font-size: 13vw;
+    }
+  }
+
+  &__dot {
+    display: inline-block;
+    width: 0.2em;
+    height: 0.2em;
+    margin-left: 0.04em;
+    border-radius: 50%;
+    background: var(--cv-accent);
+  }
+
+  &__sub {
+    margin: 22px 0 0;
+    color: #3b4250;
+    font-size: 24px;
+    font-weight: 700;
+
+    @media screen and (max-width: 900px) {
+      font-size: 17px;
+    }
+  }
+
+  &__rule {
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 22px auto 28px;
+    background: var(--cv-accent);
+  }
+
+  &__contact {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 26px;
+    margin: 0;
+    padding: 20px 36px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    list-style: none;
+    font-size: 16px;
+    font-weight: 700;
+
+    li {
+      margin: 0;
+    }
+
+    i {
+      margin-right: 6px;
+      color: var(--cv-accent);
+    }
+  }
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    margin: 0;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 19px;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(21, 23, 28, 0.08);
+
+    &--fill {
+      background: var(--cv-accent);
+      color: #fff;
+    }
+
+    @media screen and (max-width: 900px) {
+      padding: 6px 14px;
+      font-size: 14px;
+    }
+  }
+}
+
+/* About Me */
+.about {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 400px 1fr;
+  gap: 52px;
+  align-items: center;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  &__photo {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(21, 23, 28, 0.06);
+
+    img {
+      width: 72%;
+      image-rendering: pixelated;
+    }
+
+    @media screen and (max-width: 900px) {
+      width: 160px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+
+    em {
+      color: var(--cv-accent);
+      font-style: normal;
+    }
+  }
+
+  &__tagline {
+    margin: 6px 0 22px;
+    color: #4b5260;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__contacts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 24px;
+    margin: 0 0 22px;
+    padding: 0 0 22px;
+    border-bottom: 1px solid var(--cv-line);
+    list-style: none;
+    font-size: 15px;
+    font-weight: 700;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin: 0;
+    }
+
+    i {
+      display: inline-grid;
+      flex: none;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      border-radius: 50%;
+      background: var(--cv-accent-soft);
+      color: var(--cv-accent);
+      font-size: 12px;
+    }
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__sep {
+    margin: 0 8px;
+    color: var(--cv-muted);
+  }
+
+  .section-label {
+    color: var(--cv-muted);
+    font-family: var(--cv-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+  }
+
+  /* 이력서 상단: 같은 구성을 A4 폭에 맞게 */
+  &--compact {
+    grid-template-columns: 150px 1fr;
+    gap: 28px;
+    align-items: start;
+
+    .about__photo {
+      border: 1px solid var(--cv-line);
+      box-shadow: none;
+    }
+
+    .about__title {
+      font-size: 24px;
+    }
+
+    .about__tagline {
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+
+    .about__contacts {
+      gap: 8px 20px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      font-size: 13.5px;
+
+      i {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+      }
+    }
+
+    .checks li {
+      margin-bottom: 0.35em;
+      font-size: 13.5px;
+    }
+
+    @media screen and (max-width: 640px) {
+      grid-template-columns: 1fr;
+
+      .about__photo {
+        width: 110px;
+      }
+    }
+  }
+}
+
+/* 경력 & 기술 */
+.skill-career {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 5fr 12fr;
+  gap: 48px;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.col-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+
+  small {
+    color: #9aa1ad;
+    font-family: var(--cv-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
+
+.skill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+  color: var(--cv-accent-dark);
+  font-family: var(--cv-mono);
+  font-size: 12px;
+  font-weight: 800;
+
+  &::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+}
+
+.timeline {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 36px;
+  list-style: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    bottom: 14px;
+    left: 10px;
+    width: 2px;
+    background: #cfd8e6;
+  }
+
+  &__item {
+    position: relative;
+    margin: 0 0 10px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: -36px;
+      width: 18px;
+      height: 18px;
+      border: 3px solid var(--cv-accent);
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    &:first-child::before {
+      background: var(--cv-accent);
+    }
+  }
+
+  &__card {
+    padding: 10px 18px;
+    border: 1px solid var(--cv-line);
+    border-radius: 14px;
+    background: #fff;
+  }
+
+  &__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+
+    strong {
+      font-size: 19px;
+      font-weight: 900;
+    }
+  }
+
+  &__period {
+    margin-left: auto;
+    color: var(--cv-accent);
+    font-family: var(--cv-mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &__summary {
+    margin: 0 0 6px;
+    color: var(--cv-muted);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .card__list {
+    margin: 0;
+  }
+}
+
+/* 협업 */
+.collab {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+
+  &__row {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 22px;
+    align-items: center;
+    padding: 10px 16px;
+    border: 1px solid var(--cv-line);
+    border-radius: 16px;
+    background: #fff;
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__text {
+    .badge {
+      margin-bottom: 6px;
+      font-size: 11.5px;
+    }
+
+    h3 {
+      margin: 0 0 4px;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    p {
+      margin: 0 0 4px;
+      color: #4b5260;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+
+    small {
+      color: var(--cv-muted);
+      font-family: var(--cv-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+    }
+  }
+}
+
+.chat {
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cv-dark);
+  color: #e8eaee;
+
+  &__bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 5px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #9aa1ad;
+    font-family: var(--cv-mono);
+    font-size: 11px;
+
+    b {
+      color: #e8eaee;
+    }
+  }
+
+  &__dots {
+    width: 8px;
+    height: 8px;
+    margin-right: 30px;
+    border-radius: 50%;
+    background: #ff5f57;
+    box-shadow: 13px 0 #febc2e, 26px 0 #28c840;
+  }
+
+  &__body {
+    display: flex;
+    gap: 12px;
+    padding: 8px 14px 10px;
+  }
+
+  &__avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #6f86b0, var(--cv-accent));
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  &__who {
+    margin: 0 0 3px;
+    font-size: 13px;
+    font-weight: 800;
+
+    span {
+      color: #8ea3c6;
+      font-size: 11.5px;
+    }
+
+    small {
+      color: #9aa1ad;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  }
+
+  &__msg {
+    margin: 0;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+
+  &__note {
+    margin: 2px 0 0;
+    color: #c4c9d2;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  code {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f6d58e;
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 2px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: #f6d58e;
+      font-family: var(--cv-mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+  }
+}
+
+.dark-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0 0;
+  padding: 11px 22px;
+  border-radius: 12px;
+  background: var(--cv-dark);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.55;
+
+  i {
+    color: #8ea3c6;
+  }
+
+  strong {
+    color: #b9c8e2;
+  }
+
+  &--quote::before {
+    content: "\201C";
+    color: #8ea3c6;
+    font-family: Georgia, serif;
+    font-size: 52px;
+    line-height: 0.6;
+  }
+}
+
+/* 회고 */
+.retro {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+
+  @media screen and (max-width: 900px) {
     grid-template-columns: 1fr;
   }
 
-  .home-hero__stack {
-    margin-top: 0.75em;
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 26px;
+  }
+
+  &__num {
+    margin: 0 0 8px;
+    color: var(--cv-accent);
+    font-family: var(--cv-mono);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+  }
+
+  &__sub {
+    margin: 4px 0 14px;
+    color: #9aa1ad;
+    font-family: var(--cv-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+
+  &__desc {
+    margin: 0 0 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cv-line);
+    color: #3b4250;
+    font-size: 14.5px;
+    line-height: 1.7;
   }
 }
 
-.cv-closing {
-  margin: 1.5em 0 0;
-  padding: 1em 1.3em;
-  border-radius: 12px;
-  background: var(--text);
-  color: #fff;
-  font-size: 0.9em;
-  font-weight: 600;
-  line-height: 1.7;
-}
+.slide .resume-project__posts {
+  margin-top: 0;
+  padding: 8px 14px;
 
-/* 관련 글 상자가 .resume-project 밖(케이스·AI 활용)에 있어도 같은 제목 크기 */
-.cv .resume-project__posts h5 {
-  margin: 0 0 0.5em;
-  color: var(--muted);
-  font-size: 0.75em;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  a {
+    display: inline-block;
+    margin: 2px 14px 0 0;
+    font-size: 12px;
+  }
 }

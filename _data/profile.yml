@@ -35,6 +35,7 @@ strengths:
 skills:
   - group: "Frontend"
     items: [React, TypeScript, Next.js, Vue 3, jQuery]
+    primary: [React, TypeScript]   # 포트폴리오에서 강조 표시
   - group: "State & Data"
     items: [TanStack Query, Zustand, Pinia, Axios]
   - group: "Platform"
@@ -52,40 +53,77 @@ studies:
   - "사내 서버리스 스터디"
   - "사내 블록체인 스터디"
 
-# 주요 경험·강점 요약 — 이력서·포트폴리오 상단 체크리스트
+# 주요 경험·강점 요약 — 이력서·포트폴리오 상단 체크리스트 (**굵게** 표기 가능)
 highlights:
-  - "커머스 SaaS · 의료 AI · AI 생산성 서비스 개발 경험"
-  - "권한 정책 · 상태 관리 · 인증 만료 대응 구조 설계"
-  - "WebView 환경에서 앱 재실행 · 네트워크 단절 복구 경험"
-  - "반복되는 문제를 공통 구조로 개선해 유지보수성 향상"
-  - "사용자 작업이 끊기지 않는 경험 설계에 관심"
+  - "**커머스 SaaS · 의료 AI · AI 생산성 서비스** 개발 경험"
+  - "**권한 정책 · 상태 관리 · 인증 만료 대응** 구조 설계"
+  - "WebView 환경에서 **앱 재실행 · 네트워크 단절 복구** 경험"
+  - "반복되는 문제를 **공통 구조로 개선**하여 유지보수성 향상"
+  - "사용자 작업이 **끊기지 않는 경험 설계**에 관심"
 
-# 포트폴리오 — 협업 방식
+# 포트폴리오 표지·About Me·마지막 장 문구
+# 연차("N년차")는 career.yml에서 계산하므로 여기에 쓰지 않는다
+portfolio:
+  subtitle: "사용자 경험을 설계하는 프론트엔드 개발 포트폴리오"
+  title_role: "Frontend Engineer"
+  tagline: "사용자 흐름을 설계하는 프론트엔드 개발자"
+  tags: [사용자 경험 설계, 복잡한 문제 단순화, 운영 이슈 대응, 상태 흐름 설계]
+  thanks: "읽어주셔서 감사합니다. 언제든 편하게 연락 주세요."
+
+# 포트폴리오 — 협업 방식. chat은 실제 대화를 옮긴 예시 카드
 collaboration:
-  intro: "문제를 혼자 해결하기보다, 함께 정의하고 해결 방향을 만들어가는 과정을 중요하게 생각합니다."
+  intro: "문제를 혼자 해결하기보다, **함께 정의하고 해결 방향을 만들어가는 과정**을 중요하게 생각합니다."
   items:
-    - with: "디자이너"
+    - with: "디자이너 · Designer"
       title: "화면 · UI 흐름 중심으로 공유"
-      desc: "Figma 코멘트로 인터랙션과 예외 케이스를 짚으며 화면 흐름을 함께 맞춥니다. 예를 들어 담당자 선택에 '해제' 방법이 빠진 화면을 기존 설정 화면과 비교해 짚었습니다."
-    - with: "백엔드"
+      desc: "Figma 코멘트로 **인터랙션과 예외 케이스**를 짚으며 화면 흐름을 함께 맞춥니다."
+      meta: "FIGMA · 디자인 리뷰 코멘트"
+      chat:
+        app: "Figma"
+        channel: "Comment"
+        to: "디자이너"
+        topic: "디자인 리뷰"
+        message: "담당자를 선택하고 해제할 수 있는 방법이 없어 보이는데 괜찮을까요?"
+        note: "여기 '없음' 선택이 빠져있는데 — 캘린더 기본 설정엔 있어요."
+    - with: "백엔드 · Backend"
       title: "공통 데이터 규격을 먼저 제안"
-      desc: "알림마다 다르던 FCM data payload를 type 기반 공통 규격으로 맞추자고 제안했습니다. route를 직접 내려받는 대신 type으로 랜딩 화면을 정해 알림 종류가 늘어도 확장할 수 있게 했습니다."
-    - with: "백엔드"
-      title: "Payload · Response · 재현 경로 기반 협의"
-      desc: "API 스펙과 필터, 응답 형태를 기존 패턴과 같은 구체적인 근거로 제시해 빠르게 합의합니다."
-  closing: "디자이너 · 백엔드 등 함께 일하는 동료와 의사결정 배경을 공유하며, 공통의 이해를 만드는 것을 중요하게 생각합니다."
+      desc: "알림 처리를 **공통 FCM payload 규격**으로 맞추자고 제안하며, 확장 가능한 구조를 함께 정의합니다."
+      meta: "SLACK · FCM payload 규격 제안"
+      chat:
+        app: "Slack"
+        channel: "Thread"
+        to: "백엔드"
+        topic: "알림 규격"
+        message: "현재 공지사항은 `{ \"type\": \"notice\", \"id\": \"123\" }` 형태로 처리하고 있는데, 다른 알림도 **FCM data payload 스펙을 동일한 규격으로** 맞춰두면 좋을 것 같습니다!"
+        note: "route를 직접 내려주는 방식보다 type 기반으로 처리하는 쪽이 확장성 면에서 나을 것 같아요. type값을 확인해 랜딩페이지로 이동시키는 방향은 어떨까요?"
+        chips: [notice, schedule, todo, remind, image_extract, inquiry, invite]
+    - with: "백엔드 · Backend"
+      title: "Payload · Response · 재현 경로 기반"
+      desc: "API 스펙과 필터, 응답 형태를 **구체적인 근거와 재현 경로**로 공유해 빠르게 합의합니다."
+      meta: "API 스펙 · categoryIds 필터 협의"
+      chat:
+        app: "Slack"
+        channel: "Thread"
+        to: "백엔드"
+        topic: "API 협의"
+        message: "`GET /schedules/monthly` 월별 일정 조회 API에 `categoryIds` 필터 추가가 가능할까요?"
+        note: "필터 조회 시 카테고리 선택분도 조회되도록 — `ownerWorkspaceUserIds`와 같은 패턴으로요."
+  closing: "디자이너 · 백엔드 등 함께 일하는 동료와 **의사결정 배경을 공유**하며, 공통의 이해를 만드는 것을 중요하게 생각합니다."
 
 # 포트폴리오 — 회고
 retrospective:
-  intro: "AI 기능이 포함된 하이브리드 앱에서는 단순 기능 구현보다, 상태와 흐름을 어떻게 설계하느냐가 서비스의 안정성을 좌우한다는 것을 경험했습니다."
+  intro: "AI 기능이 포함된 하이브리드 앱에서는 단순 기능 구현보다, **상태와 흐름을 어떻게 설계하느냐**가 서비스의 안정성을 좌우한다는 것을 경험했습니다."
   items:
     - title: "AI 하이브리드 앱"
-      desc: "단순 기능 구현보다 플랫폼 간 상태 동기화, 장시간 비동기 작업 안정성, 인증·네트워크 복구, 사용자 흐름 유지가 훨씬 중요하다는 점을 경험했습니다."
-      tags: [상태 동기화, 비동기 안정성, 인증·네트워크 복구]
+      subtitle: "WHAT MATTERS MOST"
+      desc: "단순 기능 구현보다 **플랫폼 간 상태 동기화, 장시간 비동기 작업 안정성, 인증·네트워크 복구, 사용자 흐름 유지**가 훨씬 중요하다는 점을 경험했습니다."
+      tags: [상태 동기화, 비동기 안정성, 인증·네트워크 복구, 흐름 유지]
     - title: "WebView · Lifecycle"
-      desc: "Web · Native · OS lifecycle이 서로 다르게 동작하기 때문에, 개별 버그를 반복 수정하기보다 상태 복구 흐름 자체를 공통 구조로 정리하는 방식이 장기적으로 더 큰 효과를 만든다는 점을 반복적으로 경험했습니다."
+      subtitle: "COMMON STRUCTURE OVER PATCHES"
+      desc: "Web · Native · OS lifecycle이 서로 다르게 동작하기 때문에, 개별 버그를 반복 수정하기보다 **상태 복구 흐름 자체를 공통 구조로 정리**하는 방식이 장기적으로 더 큰 효과를 만든다는 점을 반복적으로 경험했습니다."
       tags: [Web · Native · OS, 공통 복구 구조]
     - title: "React 상태 설계"
-      desc: "서버 상태와 UI 상태를 어떻게 분리할지, 비동기 작업 흐름을 어떻게 사용자 경험으로 연결할지에 따라 서비스 안정성과 유지보수성이 크게 달라진다는 점을 배웠습니다."
+      subtitle: "SERVER STATE × UI STATE"
+      desc: "화면 구현을 넘어 **서버 상태와 UI 상태를 어떻게 분리할지**, 비동기 작업 흐름을 어떻게 사용자 경험으로 연결할지에 따라 **서비스 안정성과 유지보수성**이 크게 달라진다는 점을 배웠습니다."
       tags: [서버 / UI 상태 분리, 비동기 → UX]
-  closing: "기능 단위 구현보다 상태 흐름과 공통 처리 구조를 먼저 정리하는 방식이, 복잡한 운영 환경에서 더 안정적인 사용자 경험을 만든다고 생각하게 되었습니다."
+  closing: "기능 단위 구현보다 **상태 흐름과 공통 처리 구조를 먼저 정리**하는 방식이, 복잡한 운영 환경에서 더 안정적인 사용자 경험을 만든다고 생각하게 되었습니다."

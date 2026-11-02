@@ -11,27 +11,56 @@
   problem:
     - "Android WebView 환경에서 Dialog, Bottom Sheet, Overlay가 여러 겹으로 열려 있을 때 뒤로가기 동작을 예측하기 어려웠습니다."
     - "가장 위 레이어만 닫혀야 했지만, 상황에 따라 하위 Sheet가 먼저 닫히거나 앱 종료 토스트가 노출되는 문제가 반복됐습니다."
-    - "MainLayout 안에서 레이어별 조건문으로 처리하고 있어, 레이어가 추가될 때마다 분기 코드가 늘어나는 구조였습니다."
+    - "`MainLayout` 안에서 레이어별 조건문으로 처리하고 있어, 레이어가 추가될 때마다 분기 코드가 늘어나는 구조였습니다."
   solution:
-    - "뒤로가기 이벤트의 진입점을 window.handleBackPress 하나로 통일하고, 전역 backPressStore가 우선순위 기반으로 handler를 관리하도록 바꿨습니다."
-    - "각 레이어는 useBackPress 훅으로 자신의 우선순위와 handler만 등록하고, 뒤로가기가 발생하면 가장 높은 우선순위의 handler만 실행됩니다."
+    - "뒤로가기 이벤트의 진입점을 `window.handleBackPress` 하나로 통일하고, 전역 `backPressStore`가 우선순위 기반으로 handler를 관리하도록 바꿨습니다."
+    - "각 레이어는 `useBackPress` 훅으로 자신의 우선순위와 handler만 등록하고, 뒤로가기가 발생하면 가장 높은 우선순위의 handler만 실행됩니다."
+  # 슬라이드 하단 카드 — context(상황), before, after
+  context:
+    title: "상황"
+    note: "레이어 우선순위 예시"
+    rows:
+      - { name: "TimePicker", value: "priority 1000" }
+      - { name: "FormSheet", value: "priority 600" }
+      - { name: "DetailSheet", value: "priority 500" }
+    steps:
+      - "뒤로가기 1회 → TimePicker 닫힘"
+      - "뒤로가기 2회 → FormSheet 닫힘"
+      - "뒤로가기 3회 → DetailSheet 닫힘"
+      - "뒤로가기 4회 → Native 앱 종료 처리"
+  before:
+    note: "조건문 분기 처리"
+    code: |
+      MainLayout
+       ├─ if Dialog 열림
+       ├─ if Sheet 열림
+       ├─ if Overlay 열림
+       ├─ if Popup 열림
+       └─ else 앱 종료 처리
+    verdict: "조건문 증가 · 레이어 충돌 · 핫픽스 누적"
+  after:
+    note: "우선순위 기반 처리"
+    items:
+      - "각 레이어: `useBackPress(priority, handler)`"
+      - "`backPressStore`: priority 정렬 → **가장 높은 우선순위 handler 하나만 실행**"
+    verdict: "레이어 추가 시 우선순위만 지정"
   # 처리 흐름 — 포트폴리오에서 단계 다이어그램으로 그린다
   flow:
     - "Android Back Button"
     - "Flutter 감지"
-    - "window.handleBackPress() — 단일 진입점"
-    - "backPressStore.handleBackPress()"
+    - "`window.handleBackPress()` — 단일 진입점"
+    - "`backPressStore.handleBackPress()`"
     - "우선순위 정렬"
-    - "가장 높은 우선순위 handler 실행 → true면 이벤트 소비, 모두 false면 Native로 위임"
+    - "가장 높은 우선순위 handler 실행 → `true`면 이벤트 소비, 모두 `false`면 Native로 위임"
   design_points:
     - "Android 뒤로가기 이벤트를 단일 진입점으로 통합"
     - "Dialog · Sheet · Overlay 등 레이어별 우선순위 체계 정의"
-    - "enabled 값에 따라 handler 등록 · 해제 자동화"
-    - "가장 높은 우선순위 handler가 true를 반환하면 이벤트를 소비하고, 모든 handler가 false일 때만 Native로 위임"
+    - "`enabled` 값에 따라 handler 등록 · 해제 자동화"
+    - "가장 높은 우선순위 handler가 `true`를 반환하면 이벤트를 소비하고, 모든 handler가 `false`일 때만 Native로 위임"
   result:
     - "중첩 레이어 환경에서도 항상 가장 위 레이어부터 닫히도록 개선"
     - "레이어를 추가할 때 우선순위만 지정하면 뒤로가기 동작이 적용되는 구조"
-    - "MainLayout 조건문 기반 핫픽스 구조를 제거해 유지보수성 개선"
+    - "`MainLayout` 조건문 기반 핫픽스 구조를 제거해 유지보수성 개선"
     - "엉뚱한 레이어가 닫히거나 앱 종료 토스트가 노출되던 충돌 감소"
   learned:
     - "복잡한 상태 문제는 개별 버그를 계속 수정하기보다, 이벤트 처리 모델 자체를 단순화하는 방식이 더 효과적이라는 점을 경험했습니다."
@@ -46,9 +75,30 @@
     - "사진·음성으로 일정을 추출하는 AI 처리는 시간이 오래 걸려, 사용자가 백그라운드로 이동하거나 WebView가 다시 마운트되면 작업 흐름이 끊길 수 있었습니다."
     - "같은 작업이 중복 실행되면 결과가 충돌하거나 잘못된 진행 상태가 표시될 수 있었습니다."
   solution:
-    - "요청 응답을 기다리는 방식 대신 서버 Job 상태를 단일 진실 소스로 두었습니다. 업로드 후 Job을 만들고 jobId만 받아, 화면은 jobId로 서버 상태를 폴링합니다."
-    - "Zustand는 영속 저장소가 아니라 현재 UI 표시를 위한 휘발성 상태로만 사용했습니다."
+    - "요청 응답을 기다리는 방식 대신 `서버 Job` 상태를 단일 진실 소스로 두었습니다. 업로드 후 Job을 만들고 `jobId`만 받아, 화면은 `jobId`로 서버 상태를 폴링합니다."
+    - "`Zustand`는 영속 저장소가 아니라 현재 UI 표시를 위한 휘발성 상태로만 사용했습니다."
     - "추출이 끝난 결과를 들고 편집 화면으로 이동하고, 편집 중에는 서버를 다시 부르지 않아 늦게 도착한 응답이 사용자 입력을 덮지 않게 했습니다."
+  context:
+    title: "역할 분담"
+    note: "상태의 단일 진실 소스"
+    rows:
+      - { name: "Server Job", value: "**단일 진실 소스** — 진행 상태의 기준" }
+      - { name: "React Query", value: "`jobId` 기반 폴링으로 서버 상태를 주기적으로 재동기화" }
+      - { name: "Zustand", value: "현재 UI 표시를 위한 **휘발성 상태** (영속 X)" }
+  before:
+    note: "클라이언트 상태에 의존"
+    items:
+      - "백그라운드 진입 · WebView 리마운트 시 **진행 흐름 끊김**"
+      - "같은 작업 중복 실행 시 **결과 충돌 · 상태 불일치**"
+      - "클라이언트 상태와 실제 서버 상태가 어긋남"
+    verdict: "흐름 단절 · 상태 불일치"
+  after:
+    note: "서버 Job 단일 진실 소스"
+    items:
+      - "**`jobId` 폴링**으로 재진입 시 진행 상태 복원"
+      - "장시간 AI 처리 중에도 **흐름이 끊기지 않음**"
+      - "서버 상태 기준으로 **중복 실행 · 불일치 가능성 감소**"
+    verdict: "흐름 유지 · 상태 일관성 확보"
   flow:
     - "AI Job 생성"
     - "jobId 보관"
@@ -58,10 +108,10 @@
     - "결과 회수"
   design_points:
     - "서버 Job을 진행 상태의 단일 진실 소스로 설정"
-    - "idle → processing → completed / error / cancelled 상태 머신 구성"
-    - "jobId 기반 폴링으로 작업 상태 재동기화, React Query 리마운트 시 폴링 자동 재개"
-    - "isCallingFlutter 가드로 중복 실행 방지"
-    - "Date.now() 기반 타임아웃으로 백그라운드에 머문 시간 반영"
+    - "`idle → processing → completed / error / cancelled` 상태 머신 구성"
+    - "`jobId` 기반 폴링으로 작업 상태 재동기화, React Query 리마운트 시 폴링 자동 재개"
+    - "`isCallingFlutter` 가드로 중복 실행 방지"
+    - "`Date.now()` 기반 타임아웃으로 백그라운드에 머문 시간 반영"
   result:
     - "백그라운드 진입이나 WebView 리마운트 뒤에도 진행 상태를 다시 확인하고 결과를 회수하는 구조 확보"
     - "중복 실행 방지로 Job 충돌 가능성 감소"
@@ -76,18 +126,39 @@
   summary: "설정 앱에서 권한을 바꾸면 iOS가 앱을 종료(Signal 9)하는 상황에서, 종료를 막는 대신 직전 화면과 시트를 복원하는 흐름을 설계했습니다."
   keywords: [iOS, Flutter WebView, SharedPreferences]
   problem:
-    - "iOS 설정 앱에서 권한을 변경한 뒤 돌아오는 과정에 앱 프로세스가 Signal 9로 종료되어, 사용자가 진행 중이던 흐름을 처음부터 다시 시작해야 했습니다."
+    - "iOS 설정 앱에서 권한을 변경한 뒤 돌아오는 과정에 앱 프로세스가 `Signal 9`로 종료되어, 사용자가 진행 중이던 흐름을 처음부터 다시 시작해야 했습니다."
   solution:
-    - "Signal 9는 웹에서 제어할 수 없으므로, 종료를 막는 대신 상태를 복원하는 방향으로 흐름을 설계했습니다."
+    - "`Signal 9`는 웹에서 제어할 수 없으므로, 종료를 막는 대신 상태를 복원하는 방향으로 흐름을 설계했습니다."
+  context:
+    title: "구조도"
+    note: "Web ↔ Flutter"
+    rows:
+      - { name: "Web", value: "`saveRoute()` — 설정 이동 직전 상태 전달" }
+      - { name: "Flutter", value: "`SharedPreferences`에 저장 · 재시작 시 로드" }
+      - { name: "Web", value: "`onRestoreRoute()` → `navigate()` · `restoreSheet()`" }
+  before:
+    note: "권한 변경 후 흐름"
+    items:
+      - "권한 요청 → 설정 앱 이동"
+      - "`Signal 9`로 앱 종료"
+      - "사용자 흐름을 **처음부터 다시 시작**"
+    verdict: "진행 중이던 작업 유실"
+  after:
+    note: "저장 → 재시작 → 복원"
+    items:
+      - "설정 이동 직전 **Route · Sheet · PermissionType** 저장"
+      - "재시작 시 Flutter가 직전 상태를 로드해 Web으로 전달"
+      - "**마운트 전 버퍼링** 후 직전 화면 · 시트 자동 복원"
+    verdict: "직전 작업 위치로 복귀"
   flow:
     - "설정 진입 직전 — route · sheet · permissionType 저장"
-    - "Signal 9 — 프로세스 강제 종료"
+    - "`Signal 9` — 프로세스 강제 종료"
     - "앱 재시작 — Flutter → Web 복구 콜백"
     - "상태 복원 — React 마운트 전 버퍼링"
     - "직전 화면 · 시트 자동 복원"
   design_points:
-    - "상태 저장: 설정으로 이동하기 직전의 route, 열린 sheet, permissionType을 SharedPreferences에 저장"
-    - "자동 복원: 앱 재시작 시 Flutter → Web 복구 콜백으로 직전 화면과 시트를 복원"
+    - "상태 저장: 설정으로 이동하기 직전의 route, 열린 sheet, permissionType을 `SharedPreferences`에 저장"
+    - "자동 복원: 앱 재시작 시 `Flutter → Web` 복구 콜백으로 직전 화면과 시트를 복원"
     - "유실 방지: React 마운트 전에 복구 이벤트가 와도 버퍼링해 보존"
     - "지연 종료 대응: 시간이 지나 종료되는 경우는 Flutter의 주기적 상태 저장으로 대응"
   result:
@@ -107,6 +178,14 @@
   solution:
     - "플랫폼별 Lifecycle 특성에 맞춰 녹음 방식을 분리했습니다. Android는 백그라운드에서도 프로세스가 유지되도록 Foreground Service로, iOS는 백그라운드 제약을 우회하기 위해 Native Recording으로 녹음합니다."
     - "React와 Flutter 사이에 양방향 브릿지 계층을 두어 녹음 상태, 권한 변경, 업로드 이벤트를 일관된 인터페이스로 처리했습니다."
+  context:
+    title: "브릿지 구조"
+    note: "Bridge Architecture"
+    rows:
+      - { name: "Flutter Shell", value: "WebView(React UI)를 감싸는 앱 셸" }
+      - { name: "Bridge 계층", value: "↑ 녹음 상태 · 업로드 · 권한 변경 이벤트 / ↓ 녹음 · 권한 요청" }
+      - { name: "Android", value: "**Foreground Service** — 백그라운드에서도 프로세스 유지" }
+      - { name: "iOS", value: "**Native Recording** — 백그라운드 제약 우회" }
   flow:
     - "녹음 시작"
     - "백그라운드 진입"

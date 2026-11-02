@@ -4,51 +4,55 @@ classes: cv-page
 ---
 
 {% assign pf = site.data.profile %}
+{% capture years %}{% include career-length.html periods=site.data.career years_only=true %}{% endcapture %}
+{% assign years = years | strip %}
+
+<style>@page { size: A4; margin: 14mm 13mm; }</style>
 
 <div id="main" role="main" class="home resume cv cv--resume">
-  <section class="resume-head">
-    <img class="resume-head__photo" src="{{ pf.photo | relative_url }}" alt="{{ pf.name }} 픽셀아트 프로필">
-    <div>
-      <p class="home-hero__eyebrow">{{ pf.role }}</p>
-      <h1 class="resume-head__name">{{ pf.name }}</h1>
-      {% include career-length.html periods=site.data.career %}
-      <p class="cv__headline">{{ pf.headline }}</p>
-      {% include cv/contacts.html %}
-    </div>
-  </section>
+  <header class="cv-resume-head">
+    <p class="cv-eyebrow">Resume · {{ pf.role }}</p>
+    <h1 class="cv-resume-head__name">{{ pf.name }}<span class="hero__dot"></span></h1>
+    {% include career-length.html periods=site.data.career %}
+  </header>
+  {% include cv/profile-head.html years=years compact=true %}
 
   <section class="home-section">
+    <p class="cv-eyebrow">Profile</p>
     <h2 class="home-section__title">소개</h2>
     <div class="resume-intro">
       {% for line in pf.intro %}<p>{{ line }}</p>{% endfor %}
     </div>
-    {% include cv/list.html items=pf.highlights class="cv-checklist" %}
   </section>
 
   <section class="home-section">
+    <p class="cv-eyebrow">Career</p>
     <h2 class="home-section__title">경력</h2>
     {% include cv/career.html absolute=true %}
   </section>
 
   <section class="home-section cv-keep">
+    <p class="cv-eyebrow">Skill</p>
     <h2 class="home-section__title">기술 스택</h2>
     <dl class="resume-skills">
       {% for g in pf.skills %}
         <dt>{{ g.group }}</dt>
-        <dd><ul class="home-hero__stack">{% for t in g.items %}<li>{{ t }}</li>{% endfor %}</ul></dd>
+        <dd><ul class="chips">{% for t in g.items %}<li class="chips__item{% if g.primary contains t %} chips__item--fill{% endif %}">{{ t }}</li>{% endfor %}</ul></dd>
       {% endfor %}
     </dl>
   </section>
 
   <section class="home-section cv-keep">
+    <p class="cv-eyebrow">AI</p>
     <h2 class="home-section__title">AI 활용</h2>
-    {% include cv/list.html items=pf.ai class="resume-list" %}
+    {% include cv/list.html items=pf.ai class="card__list card__list--check" %}
     {% include cv/related-posts.html urls=pf.ai_posts absolute=true %}
   </section>
 
   <section class="home-section cv-keep">
+    <p class="cv-eyebrow">Study</p>
     <h2 class="home-section__title">스터디</h2>
-    {% include cv/list.html items=pf.studies class="resume-list" %}
+    {% include cv/list.html items=pf.studies class="card__list card__list--check" %}
   </section>
 
   <p class="cv__more">

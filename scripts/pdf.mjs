@@ -59,6 +59,13 @@ try {
     await page.goto(base + path, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
     await page.emulateMedia({ media: "print" });
+    // 슬라이드는 한 장 크기가 고정이라, 데이터가 길어져 내용이 잘리면 알려준다
+    const overflows = await page.$$eval(".slide", (slides) =>
+      slides
+        .map((s, i) => ({ no: i + 1, over: s.scrollHeight - s.clientHeight, title: s.querySelector(".slide__title")?.textContent.trim() }))
+        .filter((s) => s.over > 1),
+    );
+    for (const s of overflows) console.warn(`! ${file} ${s.no}장(${s.title}) 내용이 ${s.over}px 넘칩니다.`);
     await page.pdf({
       path: join(outDir, file),
       format: "A4",

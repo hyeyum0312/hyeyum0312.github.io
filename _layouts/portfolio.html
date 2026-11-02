@@ -4,29 +4,66 @@ classes: cv-page
 ---
 
 {% assign pf = site.data.profile %}
+{% assign pt = pf.portfolio %}
+{% assign pv = site.data.private %}
 {% assign cases = site.data.cases | where_exp: "c", "c.draft != true" %}
+{% capture years %}{% include career-length.html periods=site.data.career years_only=true %}{% endcapture %}
+{% assign years = years | strip %}
 
-<div id="main" role="main" class="home cv cv--portfolio">
-  <section class="cv-cover">
-    <p class="home-hero__eyebrow">{{ pf.role }} Portfolio</p>
-    <h1 class="cv-cover__title">{{ pf.name }}</h1>
-    {% include career-length.html periods=site.data.career %}
-    <p class="cv__headline">{{ pf.headline }}</p>
-    {% include cv/contacts.html %}
-    {% include cv/list.html items=pf.highlights class="cv-checklist" %}
+<style>@page { size: 1280px 720px; margin: 0; }</style>
 
-    <nav class="cv-toc" aria-label="케이스 스터디 목차">
-      <h2 class="cv-toc__title">Case Studies</h2>
-      <ol>
-        {% for c in cases %}
-          {% assign cp = site.data.projects | where: "id", c.project | first %}
-          <li><a href="#{{ c.id }}"><span class="cv-toc__project">{{ cp.name }}</span>{{ c.title }}</a></li>
-        {% endfor %}
-      </ol>
-    </nav>
-    <p class="cv__more">
-      경력 전체는 <a href="{{ '/resume/' | absolute_url }}">이력서</a>에서 볼 수 있습니다.
-    </p>
+<div id="main" role="main" class="cv cv--portfolio">
+
+  <section class="slide slide--hero">
+    <span class="slide__corner">Frontend</span>
+    <div class="hero">
+      <p class="hero__eyebrow">Frontend<br>Developer</p>
+      <h1 class="hero__word">PORTFOLIO<span class="hero__dot"></span></h1>
+      <p class="hero__sub">{{ pt.subtitle }}</p>
+      <span class="hero__rule"></span>
+      <ul class="pills">
+        <li class="pills__item pills__item--fill">{{ years }}년차 프론트엔드</li>
+        {%- for t in pt.tags %}<li class="pills__item">{{ t }}</li>{% endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="slide">
+    {% include cv/slide-head.html eyebrow="Profile" title="ABOUT ME" %}
+    {% include cv/profile-head.html years=years %}
+  </section>
+
+  <section class="slide">
+    {% include cv/slide-head.html eyebrow="Skill & Career" title="경력 & 기술 스택" %}
+    <div class="skill-career">
+      <div>
+        <h3 class="col-title">Skill<small>Tech Stack</small></h3>
+        {%- for g in pf.skills %}
+        <p class="skill-group">{{ g.group }}</p>
+        <ul class="chips">
+          {%- for t in g.items %}<li class="chips__item{% if g.primary contains t %} chips__item--fill{% endif %}">{{ t }}</li>{% endfor -%}
+        </ul>
+        {%- endfor %}
+      </div>
+      <div>
+        <h3 class="col-title">Career<small>Work Experience</small></h3>
+        <ol class="timeline">
+          {%- for job in site.data.career %}
+          <li class="timeline__item">
+            <div class="timeline__card">
+              <div class="timeline__head">
+                <strong>{% include cv/company-name.html job=job %}</strong>
+                <span class="tag">{{ job.role }}</span>
+                <span class="timeline__period">{% include cv/period.html start=job.start end=job.end %}</span>
+              </div>
+              {%- if job.summary %}<p class="timeline__summary">{{ job.summary }}</p>{% endif %}
+              {% include cv/list.html items=job.highlights class="card__list card__list--check card__list--sm" %}
+            </div>
+          </li>
+          {%- endfor %}
+        </ol>
+      </div>
+    </div>
   </section>
 
   {% for c in cases %}
@@ -34,37 +71,68 @@ classes: cv-page
   {% endfor %}
 
   {% assign co = pf.collaboration %}
-  <section class="cv-section cv-page-break">
-    <p class="cv-case__eyebrow">Collaboration</p>
-    <h2 class="cv-case__title">협업</h2>
-    <p class="cv-case__summary">{{ co.intro }}</p>
-    <div class="cv-cards">
-      {% for item in co.items %}
-        <div class="resume-card">
-          <span class="featured-card__theme">{{ item.with }}</span>
-          <h3 class="featured-card__title">{{ item.title }}</h3>
-          <p class="featured-card__excerpt">{{ item.desc }}</p>
+  <section class="slide">
+    {% include cv/slide-head.html eyebrow="Collaboration" title="협업" sub="How I Work With Others" aside=co.intro %}
+    <div class="collab">
+      {%- for item in co.items %}
+      <div class="collab__row">
+        <div class="collab__text">
+          <span class="badge badge--solution">{{ item.with }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{% include cv/md.html text=item.desc %}</p>
+          <small>{{ item.meta }}</small>
         </div>
-      {% endfor %}
+        <div class="chat">
+          <p class="chat__bar"><span class="chat__dots"></span><b>{{ item.chat.app }}</b> · {{ item.chat.channel }}</p>
+          <div class="chat__body">
+            <span class="chat__avatar">나</span>
+            <div>
+              <p class="chat__who">나 <span>→ {{ item.chat.to }}</span> <small>{{ item.chat.topic }}</small></p>
+              <p class="chat__msg">{% include cv/md.html text=item.chat.message %}</p>
+              {%- if item.chat.note %}<p class="chat__note">{% include cv/md.html text=item.chat.note %}</p>{% endif %}
+              {%- if item.chat.chips %}<ul class="chat__chips">{% for t in item.chat.chips %}<li>{{ t }}</li>{% endfor %}</ul>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {%- endfor %}
     </div>
-    <p class="cv-closing">{{ co.closing }}</p>
+    <p class="dark-bar"><i class="fas fa-user-friends" aria-hidden="true"></i>{% include cv/md.html text=co.closing %}</p>
   </section>
 
   {% assign re = pf.retrospective %}
-  <section class="cv-section cv-keep">
-    <p class="cv-case__eyebrow">Retrospective</p>
-    <h2 class="cv-case__title">회고</h2>
-    <p class="cv-case__summary">{{ re.intro }}</p>
-    <div class="cv-cards">
-      {% for item in re.items %}
-        <div class="resume-card">
-          <h3 class="featured-card__title">{{ item.title }}</h3>
-          <p class="featured-card__excerpt">{{ item.desc }}</p>
-          <ul class="home-hero__stack">{% for t in item.tags %}<li>{{ t }}</li>{% endfor %}</ul>
-        </div>
-      {% endfor %}
+  <section class="slide">
+    {% include cv/slide-head.html eyebrow="Retrospective" title="회고" sub="What I Learned" aside=re.intro %}
+    <div class="retro">
+      {%- for item in re.items %}
+      <div class="card retro__card">
+        <p class="retro__num">{{ forloop.index | prepend: "0" }}</p>
+        <h3>{{ item.title }}</h3>
+        <p class="retro__sub">{{ item.subtitle }}</p>
+        <p class="retro__desc">{% include cv/md.html text=item.desc %}</p>
+        <ul class="chips chips--sm">{% for t in item.tags %}<li class="chips__item">{{ t }}</li>{% endfor %}</ul>
+      </div>
+      {%- endfor %}
     </div>
-    <p class="cv-closing">{{ re.closing }}</p>
+    <p class="dark-bar dark-bar--quote">{% include cv/md.html text=re.closing %}</p>
+  </section>
+
+  <section class="slide slide--hero">
+    <span class="slide__corner">Frontend</span>
+    <span class="slide__corner slide__corner--right">Portfolio</span>
+    <div class="hero">
+      <p class="hero__eyebrow">Thank you for<br>reading</p>
+      <h2 class="hero__word">THANK YOU<span class="hero__dot"></span></h2>
+      <p class="hero__sub">{{ pt.thanks }}</p>
+      <span class="hero__rule"></span>
+      <ul class="hero__contact">
+        <li><i class="fas fa-envelope" aria-hidden="true"></i><a href="mailto:{{ pf.email }}">{{ pf.email }}</a></li>
+        {%- if pv.phone and pv.phone != "" %}<li><i class="fas fa-phone" aria-hidden="true"></i>{{ pv.phone }}</li>{% endif %}
+        <li><i class="fab fa-github" aria-hidden="true"></i><a href="{{ pf.github }}">GitHub</a></li>
+        <li><i class="fas fa-pen" aria-hidden="true"></i><a href="{{ pf.blog }}">Blog</a></li>
+        <li><i class="fas fa-file-alt" aria-hidden="true"></i><a href="{{ '/resume/' | absolute_url }}">이력서</a></li>
+      </ul>
+    </div>
   </section>
 
   {{ content }}

@@ -6,22 +6,38 @@
 - id: current
   name: "모빌리티 서비스 기업"
   desc: "내차팔기·장기렌트·대리운전·대중교통·자동차보험 등 모빌리티 통합 서비스"
+  summary: "모빌리티 서비스 · 대중교통"
   private_key: current
   role: "Frontend Developer"
   start: "2026-08"
   end: ""
   projects: [transit]
+  highlights:
+    - "버스·지하철 승하차 알림의 **비동기 상태 충돌**을 단계 순위·최종 결정자 원칙으로 해결"
+    - "노선도·위치 조회를 분리하고 **캐시 재사용 기준** 정리"
+    - "정책과 예외 조건을 문서화해 **AI 협업 기준**과 회귀 테스트로 고정"
 
 - id: dkargo
   name: "dKargo"
   role: "Frontend Developer"
   start: "2024-12"
   end: "2026-07"
+  summary: "AI 기반 생산성 서비스 · 의료 AI 서비스"
   projects: [moa, medisound, onbrix]
+  # 포트폴리오 경력 카드 요약 (**굵게** 표기 가능)
+  highlights:
+    - "**권한 정책 · 상태 관리 · 복구 로직** 등 사용자 흐름 중심의 기능 설계"
+    - "WebView 환경에서 **인증 만료 · 네트워크 단절 · 앱 재실행** 복구 구조 구현"
+    - "AI 서비스의 장시간 처리 과정에서도 **사용자 입력이 유지되는** 상태 관리 구조 개선"
 
 - id: kiwisnap
   name: "KIWI SNAP"
   role: "Frontend Developer"
   start: "2021-03"
   end: "2024-04"
+  summary: "커머스 운영 SaaS"
   projects: [kiwisnap-saas]
+  highlights:
+    - "다양한 **이커머스 판매 채널 연동** 기능 개발"
+    - "채널별 운영 정책을 **공통 컴포넌트 구조**로 정리하여 관리 효율 개선"
+    - "레거시(jQuery) 환경을 **Vue 기반 구조로 전환**하여 유지보수성 향상"
