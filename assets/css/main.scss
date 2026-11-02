@@ -652,6 +652,4 @@ body {
   color: #fff;
 }
 
-/* custom: 이력서·포트폴리오 화면·인쇄 스타일 */
-@import "custom/cv";
-@import "custom/print";
+/* 이력서·포트폴리오 스타일은 assets/css/cv.scss로 분리 (배포마다 주소가 바뀌어 캐시에 걸리지 않게) */
