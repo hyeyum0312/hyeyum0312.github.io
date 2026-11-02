@@ -1,0 +1,17 @@
+{%- comment -%}
+  연락처 목록. 전화번호·생년월일·상세 주소는 _data/private.yml이 있을 때만(로컬 PDF 빌드) 출력한다.
+{%- endcomment -%}
+{%- assign pf = site.data.profile -%}
+{%- assign pv = site.data.private -%}
+<ul class="resume-head__contacts">
+  <li><i class="fas fa-envelope" aria-hidden="true"></i><a href="mailto:{{ pf.email }}">{{ pf.email }}</a></li>
+  {%- if pv.phone and pv.phone != "" %}
+  <li><i class="fas fa-phone" aria-hidden="true"></i><a href="tel:{{ pv.phone | remove: '.' | remove: '-' }}">{{ pv.phone }}</a></li>
+  {%- endif %}
+  {%- if pv.birth and pv.birth != "" %}
+  <li><i class="fas fa-birthday-cake" aria-hidden="true"></i>{{ pv.birth }}</li>
+  {%- endif %}
+  <li><i class="fab fa-github" aria-hidden="true"></i><a href="{{ pf.github }}">GitHub</a></li>
+  <li><i class="fas fa-pen" aria-hidden="true"></i><a href="{{ pf.blog }}">Blog</a></li>
+  <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>{% if pv.address and pv.address != "" %}{{ pv.address }}{% else %}{{ pf.location }}{% endif %}</li>
+</ul>

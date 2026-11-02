@@ -1,0 +1,31 @@
+{%- comment -%}
+  프로젝트 한 건. include.id로 projects.yml에서 찾는다.
+  include.collapse_tasks: 주요 업무를 <details>로 접는다(About). include.absolute: 관련 글을 절대 주소로(이력서 PDF).
+{%- endcomment -%}
+{%- assign p = site.data.projects | where: "id", include.id | first -%}
+{%- if p -%}
+<article class="resume-project">
+  <div class="resume-project__head">
+    <h4 class="resume-project__name">{{ p.name }}</h4>
+    <span class="resume-job__meta">{% include cv/period.html start=p.start end=p.end ongoing="진행 중" %}</span>
+  </div>
+  {%- if p.desc %}<p class="resume-project__desc">{{ p.desc }}</p>{% endif -%}
+  {%- if p.team and p.team != "" %}{% unless p.team contains "TODO:" %}<p class="resume-project__team">참여 인원 {{ p.team }}</p>{% endunless %}{% endif %}
+  <ul class="home-hero__stack resume-project__stack">
+    {%- for t in p.stack %}<li>{{ t }}</li>{% endfor -%}
+  </ul>
+  {% include cv/list.html items=p.achievements class="resume-project__achievements" %}
+  {%- if include.collapse_tasks %}
+  <details class="resume-project__tasks"{% if p.achievements.size == 0 %} open{% endif %}>
+    <summary>주요 업무</summary>
+    {% include cv/list.html items=p.tasks %}
+  </details>
+  {%- else %}
+  <div class="resume-project__tasks">
+    <h5>주요 업무</h5>
+    {% include cv/list.html items=p.tasks %}
+  </div>
+  {%- endif %}
+  {% include cv/related-posts.html urls=p.posts absolute=include.absolute %}
+</article>
+{%- endif -%}

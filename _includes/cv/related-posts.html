@@ -1,0 +1,15 @@
+{%- comment -%}
+  블로그 글 경로 목록을 글 제목 링크로 출력한다. include.absolute가 true면 PDF에서도 열리도록 절대 주소를 쓴다.
+{%- endcomment -%}
+{%- if include.urls and include.urls.size > 0 -%}
+<div class="resume-project__posts">
+  <h5>{{ include.title | default: "관련 글" }}</h5>
+  {%- for url in include.urls -%}
+    {%- assign post = site.posts | where: "url", url | first -%}
+    {%- if post -%}
+      {%- if include.absolute -%}{%- assign href = post.url | absolute_url -%}{%- else -%}{%- assign href = post.url | relative_url -%}{%- endif %}
+  <a href="{{ href }}"><i class="far fa-file-alt" aria-hidden="true"></i> {{ post.title }}</a>
+    {%- endif -%}
+  {%- endfor %}
+</div>
+{%- endif -%}

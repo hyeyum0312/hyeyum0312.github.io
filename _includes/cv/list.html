@@ -1,0 +1,14 @@
+{%- comment -%}
+  문자열 목록을 <ul>로 출력한다. "TODO:"가 들어간 항목은 건너뛰고, 남는 항목이 없으면 아무것도 출력하지 않는다.
+{%- endcomment -%}
+{%- assign shown = 0 -%}
+{%- for t in include.items -%}{%- unless t contains "TODO:" -%}{%- assign shown = shown | plus: 1 -%}{%- endunless -%}{%- endfor -%}
+{%- if shown > 0 -%}
+<ul class="{{ include.class }}">
+  {%- for t in include.items -%}
+    {%- unless t contains "TODO:" %}
+  <li>{{ t }}</li>
+    {%- endunless -%}
+  {%- endfor %}
+</ul>
+{%- endif -%}

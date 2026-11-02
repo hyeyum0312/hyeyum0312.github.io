@@ -2,7 +2,7 @@
 layout: default
 ---
 
-{% assign r = site.data.resume %}
+{% assign r = site.data.profile %}
 
 <div id="main" role="main" class="home resume">
   <section class="resume-head">
@@ -10,15 +10,8 @@ layout: default
     <div>
       <p class="home-hero__eyebrow">{{ r.role }}</p>
       <h1 class="resume-head__name">{{ r.name }}</h1>
-      {% include career-length.html periods=r.career_periods %}
-      <ul class="resume-head__contacts">
-        {% for c in r.contacts %}
-          <li>
-            <i class="{{ c.icon }}" aria-hidden="true"></i>
-            {% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}{{ c.label }}{% endif %}
-          </li>
-        {% endfor %}
-      </ul>
+      {% include career-length.html periods=site.data.career %}
+      {% include cv/contacts.html %}
     </div>
   </section>
 
@@ -43,47 +36,7 @@ layout: default
 
   <section class="home-section">
     <h2 class="home-section__title">경력</h2>
-    {% for job in r.experience %}
-      <div class="resume-job">
-        <div class="resume-job__head">
-          <h3 class="resume-job__company">{{ job.company }}</h3>
-          <span class="resume-job__meta">{{ job.role }} · {{ job.period }}</span>
-        </div>
-        {% for p in job.projects %}
-          <article class="resume-project">
-            <div class="resume-project__head">
-              <h4 class="resume-project__name">{{ p.name }}</h4>
-              <span class="resume-job__meta">{{ p.period }}</span>
-            </div>
-            {% if p.desc %}<p class="resume-project__desc">{{ p.desc }}</p>{% endif %}
-            {% if p.team %}<p class="resume-project__team">참여 인원 {{ p.team }}</p>{% endif %}
-            <ul class="home-hero__stack resume-project__stack">
-              {% for t in p.stack %}<li>{{ t }}</li>{% endfor %}
-            </ul>
-            {% if p.achievements %}
-              <ul class="resume-project__achievements">
-                {% for t in p.achievements %}<li>{{ t }}</li>{% endfor %}
-              </ul>
-            {% endif %}
-            <details class="resume-project__tasks"{% unless p.achievements %} open{% endunless %}>
-              <summary>주요 업무</summary>
-              <ul>{% for t in p.tasks %}<li>{{ t }}</li>{% endfor %}</ul>
-            </details>
-            {% if p.posts %}
-              <div class="resume-project__posts">
-                <h5>관련 글</h5>
-                {% for url in p.posts %}
-                  {% assign post = site.posts | where: "url", url | first %}
-                  {% if post %}
-                    <a href="{{ post.url | relative_url }}"><i class="far fa-file-alt" aria-hidden="true"></i> {{ post.title }}</a>
-                  {% endif %}
-                {% endfor %}
-              </div>
-            {% endif %}
-          </article>
-        {% endfor %}
-      </div>
-    {% endfor %}
+    {% include cv/career.html collapse_tasks=true %}
   </section>
 
   <section class="home-section">
@@ -101,17 +54,7 @@ layout: default
   <section class="home-section">
     <h2 class="home-section__title">AI 활용</h2>
     <ul class="resume-list">{% for t in r.ai %}<li>{{ t }}</li>{% endfor %}</ul>
-    {% if r.ai_posts %}
-      <div class="resume-project__posts">
-        <h5>관련 글</h5>
-        {% for url in r.ai_posts %}
-          {% assign post = site.posts | where: "url", url | first %}
-          {% if post %}
-            <a href="{{ post.url | relative_url }}"><i class="far fa-file-alt" aria-hidden="true"></i> {{ post.title }}</a>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
+    {% include cv/related-posts.html urls=r.ai_posts %}
   </section>
 
   <section class="home-section">

@@ -1,0 +1,9 @@
+{%- comment -%}
+  "YYYY-MM" 형식의 start/end를 "YYYY.MM ~ YYYY.MM"으로 표시한다. end가 비어 있으면 include.ongoing(기본 "재직 중")을 붙인다.
+{%- endcomment -%}
+{%- assign s = include.start | replace: "-", "." -%}
+{%- if include.end == "" or include.end == nil -%}
+  {{- s }} ~ {{ include.ongoing | default: "재직 중" -}}
+{%- else -%}
+  {{- s }} ~ {{ include.end | replace: "-", "." -}}
+{%- endif -%}

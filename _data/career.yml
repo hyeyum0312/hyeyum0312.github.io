@@ -1,0 +1,27 @@
+# 경력 데이터 — 회사 순서는 최신순
+# start/end는 "YYYY-MM" 형식. end를 비우면 재직 중으로 표시하고 총 경력도 현재까지로 계산한다.
+# name은 공개 페이지에 그대로 나간다. 실명을 숨겨야 하는 회사는 private_key를 두고
+# 실명은 _data/private.yml의 companies.<private_key>에만 적는다.
+
+- id: current
+  name: "모빌리티 서비스 기업"
+  desc: "내차팔기·장기렌트·대리운전·대중교통·자동차보험 등 모빌리티 통합 서비스"
+  private_key: current
+  role: "Frontend Developer"
+  start: "2026-08"
+  end: ""
+  projects: [transit]
+
+- id: dkargo
+  name: "dKargo"
+  role: "Frontend Developer"
+  start: "2024-12"
+  end: "2026-07"
+  projects: [moa, medisound, onbrix]
+
+- id: kiwisnap
+  name: "KIWI SNAP"
+  role: "Frontend Developer"
+  start: "2021-03"
+  end: "2024-04"
+  projects: [kiwisnap-saas]

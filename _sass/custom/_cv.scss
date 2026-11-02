@@ -1,0 +1,364 @@
+/* custom: 이력서·포트폴리오 공통 */
+.cv__headline {
+  margin: 0.6em 0 0;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.cv__more {
+  margin: 3em 0 0;
+  color: var(--muted);
+  font-size: 0.85em;
+
+  a {
+    font-weight: 700;
+  }
+}
+
+.cv-checklist {
+  margin: 1.25em 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin: 0 0 0.45em;
+    padding-left: 1.6em;
+    font-size: 0.9em;
+    font-weight: 600;
+    line-height: 1.6;
+
+    &::before {
+      content: "✓";
+      position: absolute;
+      top: 0.15em;
+      left: 0;
+      width: 1.15em;
+      height: 1.15em;
+      border-radius: 4px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8em;
+      line-height: 1.15em;
+      text-align: center;
+    }
+  }
+}
+
+.resume-job__desc {
+  margin: 0.6em 0 0;
+  color: var(--muted);
+  font-size: 0.85em;
+}
+
+.cv--resume .resume-project__tasks ul {
+  margin-top: 0;
+}
+
+/* custom: 포트폴리오 표지 */
+.cv-cover {
+  padding-bottom: 2.5em;
+  border-bottom: 1px solid var(--border);
+
+  &__title {
+    margin: 0;
+    font-size: 2.4em;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+}
+
+.cv-toc {
+  margin-top: 2em;
+  padding: 1.25em 1.4em;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+
+  &__title {
+    margin: 0 0 0.75em;
+    color: var(--accent);
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 1.4em;
+  }
+
+  li {
+    margin-bottom: 0.35em;
+    font-size: 0.95em;
+    font-weight: 700;
+  }
+
+  a {
+    color: var(--text);
+  }
+
+  &__project {
+    margin-right: 0.6em;
+    color: var(--muted);
+    font-size: 0.85em;
+    font-weight: 600;
+  }
+}
+
+/* custom: 케이스 스터디 */
+.cv-case,
+.cv-section {
+  margin-top: 4em;
+  padding-top: 2.5em;
+  border-top: 2px solid var(--text);
+}
+
+.cv-case {
+  &__head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17em;
+    gap: 1.5em;
+    align-items: start;
+
+    @media (max-width: 760px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__eyebrow {
+    margin: 0 0 0.4em;
+    color: var(--accent);
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: -0.03em;
+  }
+
+  &__summary {
+    margin: 0.6em 0 0;
+    color: var(--muted);
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+
+  &__keywords {
+    margin-top: 0.9em;
+  }
+
+  &__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35em 1em;
+    margin: 0;
+    padding: 1em 1.2em;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+    font-size: 0.78em;
+
+    dt {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: 600;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1em;
+    margin-top: 1.5em;
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+
+    .cv-case__section {
+      margin-top: 0;
+    }
+  }
+
+  &__box {
+    padding: 1.2em 1.3em;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    &--problem {
+      border-color: #f3d4d4;
+      background: #fdf5f5;
+
+      h3 {
+        color: #c92a2a;
+      }
+    }
+
+    &--solution {
+      background: var(--accent-soft);
+    }
+  }
+
+  &__section {
+    margin-top: 1.5em;
+  }
+
+  h3 {
+    margin: 0 0 0.6em;
+    font-size: 0.95em;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  &__list {
+    margin: 0;
+    padding-left: 1.1em;
+
+    li {
+      margin-bottom: 0.4em;
+      font-size: 0.88em;
+      line-height: 1.65;
+    }
+
+    &--check {
+      padding-left: 0;
+      list-style: none;
+
+      li {
+        position: relative;
+        padding-left: 1.4em;
+
+        &::before {
+          content: "✓";
+          position: absolute;
+          left: 0;
+          color: var(--accent);
+          font-weight: 800;
+        }
+      }
+    }
+  }
+
+  &__learned {
+    margin: 0;
+    padding: 0.9em 1.2em;
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    background: var(--surface);
+    font-style: normal;
+
+    p {
+      margin: 0;
+      font-size: 0.9em;
+      font-weight: 600;
+      line-height: 1.7;
+    }
+  }
+
+  .resume-project__posts {
+    margin-top: 1.5em;
+  }
+}
+
+/* 처리 흐름: 단계마다 화살표로 잇는다 */
+.cv-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5em 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: flow;
+
+  li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 0.8em;
+    font-weight: 600;
+    counter-increment: flow;
+
+    &::before {
+      content: counter(flow);
+      flex: none;
+      width: 1.6em;
+      height: 1.6em;
+      margin-right: 0.45em;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85em;
+      line-height: 1.6em;
+      text-align: center;
+    }
+
+    &:not(:last-child)::after {
+      content: "→";
+      margin: 0 0.7em;
+      color: var(--muted);
+    }
+  }
+}
+
+.cv-table {
+  display: table;
+  width: 100%;
+  font-size: 0.82em;
+
+  th {
+    background: var(--surface);
+    text-align: left;
+  }
+}
+
+/* 협업·회고 카드 */
+.cv-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1em;
+  margin-top: 1.5em;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero__stack {
+    margin-top: 0.75em;
+  }
+}
+
+.cv-closing {
+  margin: 1.5em 0 0;
+  padding: 1em 1.3em;
+  border-radius: 12px;
+  background: var(--text);
+  color: #fff;
+  font-size: 0.9em;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+/* 관련 글 상자가 .resume-project 밖(케이스·AI 활용)에 있어도 같은 제목 크기 */
+.cv .resume-project__posts h5 {
+  margin: 0 0 0.5em;
+  color: var(--muted);
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}

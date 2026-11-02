@@ -1,0 +1,15 @@
+{%- comment -%}
+  경력 전체(회사 → 프로젝트). About과 이력서가 함께 쓴다. 파라미터는 cv/project.html로 그대로 넘긴다.
+{%- endcomment -%}
+{%- for job in site.data.career %}
+<div class="resume-job">
+  <div class="resume-job__head">
+    <h3 class="resume-job__company">{% include cv/company-name.html job=job %}</h3>
+    <span class="resume-job__meta">{{ job.role }} · {% include cv/period.html start=job.start end=job.end %}</span>
+  </div>
+  {%- if job.desc %}<p class="resume-job__desc">{{ job.desc }}</p>{% endif -%}
+  {%- for pid in job.projects %}
+    {% include cv/project.html id=pid collapse_tasks=include.collapse_tasks absolute=include.absolute %}
+  {%- endfor %}
+</div>
+{%- endfor -%}

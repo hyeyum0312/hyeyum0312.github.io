@@ -1,0 +1,71 @@
+---
+layout: default
+classes: cv-page
+---
+
+{% assign pf = site.data.profile %}
+{% assign cases = site.data.cases | where_exp: "c", "c.draft != true" %}
+
+<div id="main" role="main" class="home cv cv--portfolio">
+  <section class="cv-cover">
+    <p class="home-hero__eyebrow">{{ pf.role }} Portfolio</p>
+    <h1 class="cv-cover__title">{{ pf.name }}</h1>
+    {% include career-length.html periods=site.data.career %}
+    <p class="cv__headline">{{ pf.headline }}</p>
+    {% include cv/contacts.html %}
+    {% include cv/list.html items=pf.highlights class="cv-checklist" %}
+
+    <nav class="cv-toc" aria-label="케이스 스터디 목차">
+      <h2 class="cv-toc__title">Case Studies</h2>
+      <ol>
+        {% for c in cases %}
+          {% assign cp = site.data.projects | where: "id", c.project | first %}
+          <li><a href="#{{ c.id }}"><span class="cv-toc__project">{{ cp.name }}</span>{{ c.title }}</a></li>
+        {% endfor %}
+      </ol>
+    </nav>
+    <p class="cv__more">
+      경력 전체는 <a href="{{ '/resume/' | absolute_url }}">이력서</a>에서 볼 수 있습니다.
+    </p>
+  </section>
+
+  {% for c in cases %}
+    {% include cv/case.html case=c index=forloop.index %}
+  {% endfor %}
+
+  {% assign co = pf.collaboration %}
+  <section class="cv-section cv-page-break">
+    <p class="cv-case__eyebrow">Collaboration</p>
+    <h2 class="cv-case__title">협업</h2>
+    <p class="cv-case__summary">{{ co.intro }}</p>
+    <div class="cv-cards">
+      {% for item in co.items %}
+        <div class="resume-card">
+          <span class="featured-card__theme">{{ item.with }}</span>
+          <h3 class="featured-card__title">{{ item.title }}</h3>
+          <p class="featured-card__excerpt">{{ item.desc }}</p>
+        </div>
+      {% endfor %}
+    </div>
+    <p class="cv-closing">{{ co.closing }}</p>
+  </section>
+
+  {% assign re = pf.retrospective %}
+  <section class="cv-section cv-keep">
+    <p class="cv-case__eyebrow">Retrospective</p>
+    <h2 class="cv-case__title">회고</h2>
+    <p class="cv-case__summary">{{ re.intro }}</p>
+    <div class="cv-cards">
+      {% for item in re.items %}
+        <div class="resume-card">
+          <h3 class="featured-card__title">{{ item.title }}</h3>
+          <p class="featured-card__excerpt">{{ item.desc }}</p>
+          <ul class="home-hero__stack">{% for t in item.tags %}<li>{{ t }}</li>{% endfor %}</ul>
+        </div>
+      {% endfor %}
+    </div>
+    <p class="cv-closing">{{ re.closing }}</p>
+  </section>
+
+  {{ content }}
+</div>

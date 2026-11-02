@@ -1,0 +1,8 @@
+{%- comment -%}
+  회사 표시 이름. _data/private.yml에 실명이 있으면(로컬 PDF 빌드) 실명, 없으면(공개 사이트) career.yml의 name을 쓴다.
+{%- endcomment -%}
+{%- assign real_name = nil -%}
+{%- if include.job.private_key -%}
+  {%- assign real_name = site.data.private.companies[include.job.private_key] -%}
+{%- endif -%}
+{%- if real_name and real_name != "" -%}{{ real_name }}{%- else -%}{{ include.job.name }}{%- endif -%}

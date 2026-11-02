@@ -158,6 +158,8 @@ exclude:
   - Rakefile
   - README
   - tmp
+  - pdf # npm run pdf 결과물(개인정보 포함 가능)
+  - scripts
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
 keep_files:

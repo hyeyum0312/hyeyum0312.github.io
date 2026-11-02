@@ -1,0 +1,9 @@
+# 개인정보 예시 — 이 파일을 _data/private.yml로 복사해 값을 채운다
+# _data/private.yml은 .gitignore에 있어 커밋되지 않고, 파일이 없으면 해당 항목은 화면에서 빠진다
+# 로컬에서 `npm run pdf`로 만든 PDF에만 들어간다
+
+phone: ""
+birth: ""        # 예: "1990.01.01"
+address: ""      # 공개 프로필의 location보다 자세한 주소가 필요할 때
+companies:
+  current: ""    # career.yml의 private_key와 같은 키로 실명을 적는다
