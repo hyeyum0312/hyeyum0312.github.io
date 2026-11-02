@@ -16,7 +16,7 @@
     - "버스 위치·지하철 시간표 및 실시간 도착 정보 조회 구조 개선"
     - "기존 지하철 기능 개선 및 동작 기준·인수인계 문서 정리"
   achievements:
-    - "예외·에러·캐시 처리 없이 표시 시간도 실제 운행과 맞지 않던 외주 결과물을 인수해, 1개월간 동작 기준을 다시 세우고 데이터와 싱크를 맞춤"
+    - "예외·에러·캐시 처리가 갖춰지지 않고 표시 시간도 실제 운행과 맞지 않던 기능을 인수해, 1개월간 동작 기준을 다시 세우고 데이터와 싱크를 맞춤"
     - "알림 상태를 바꾸는 주체를 정리하고 단계 순위·최종 결정자·늦은 응답 폐기·작업 잠금 원칙으로 비동기 상태 충돌 해결"
     - "탭을 누를 때마다 실시간이 아닌 데이터까지 다시 불러오던 구조를, 노선도와 위치 조회를 분리해 요청을 공유하고 오전 4시 캐시 경계와 보관 상한으로 재사용 기준 정리"
     - "직접 탑승과 데이터 조사로 지하철 동작 기준을 정하고 시간표 기준 + 실시간 보정 구조로 개선"
@@ -29,7 +29,7 @@
   start: "2026-01"
   end: "2026-07"
   team: "기획 2 · 디자인 1 · FE 2 · BE 1"
-  stack: [React, TypeScript, Zustand, TanStack Query, Flutter WebView]
+  stack: [React, TypeScript, Zustand, TanStack Query, Axios, Orval, Tailwind CSS, SCSS, Flutter WebView]
   tasks:
     - "일정·할일·워크스페이스 기능 개발"
     - "가족 권한 정책 기반 데이터 접근 및 상태 관리 구현"
@@ -38,10 +38,10 @@
     - "FCM 푸시 알림 및 딥링크 연동"
   achievements:
     - "권한 정책과 처리 흐름을 공통 구조로 통합하여 유지보수성 향상"
-    - "AI 일정 추출·재요청 과정에서도 사용자 입력이 유지되도록 상태 관리 구조 개선"
-    - "인증 만료, 네트워크 단절, 앱 재실행 상황에서도 작업을 이어갈 수 있는 복구 구조 구현"
+    - "AI 추출 일정을 등록 전 초안으로 분리하고 \"편집 중에는 사용자 입력, 등록 후에는 서버\"를 기준으로 삼아, 잦은 새로고침에도 편집 입력이 덮어써지지 않는 구조 정리"
+    - "인증 만료·네트워크 단절에 대응하는 복구 구조를 구현하고, 앱 재실행 시 작업 중이던 화면 경로와 폼 화면을 복구"
     - "Dialog, Overlay, Bottom Sheet 중첩 환경의 뒤로가기 처리 구조 개선"
-  posts: [/9th/, /10th/, /11th/]
+  posts: [/9th/, /10th/]
 
 - id: onbrix
   name: "OnBrix"
@@ -49,22 +49,20 @@
   start: "2025-11"
   end: "2025-12"
   team: "기획 2 · 디자인 1 · FE 4 · BE 3"
-  stack: [Next.js, React, TypeScript, Zustand, TanStack Query, FSD]
+  stack: [Next.js, React, TypeScript, Zustand, TanStack Query, Axios, Orval, Tailwind CSS, SCSS, FSD]
   tasks:
-    - "Next.js 기반 판매 채널 관리 화면 개발"
-    - "FSD 아키텍처 기반 기능 개발"
-    - "REST API 연동 및 데이터 처리 로직 구현"
-    - "운영 정책 기반 관리자 기능 개발"
+    - "개발 인력이 부족한 시기에 지원 인력으로 합류해 운영 관리 화면 페이지 구현"
+    - "기존 FSD 아키텍처 구조에 맞춰 Next.js 기반 화면 개발"
   achievements: []
   posts: []
 
 - id: medisound
   name: "MediSound"
-  desc: "의료 AI 음성 기록 서비스"
+  desc: "의료 AI 음성 기록 서비스 (앱으로 출시 후 웹 서비스까지 확장)"
   start: "2024-12"
   end: "2025-10"
   team: "기획 1 · 디자인 1 · FE 2 · BE 1"
-  stack: [React, TypeScript, Next.js, Vite, Zustand, TanStack Query, Flutter WebView]
+  stack: [React, TypeScript, Next.js, Vite, Zustand, TanStack Query, Axios, Orval, Tailwind CSS, SCSS, Flutter WebView]
   tasks:
     - "음성 녹음 및 업로드 기능 개발"
     - "STT 결과 조회 및 편집 기능 개발"
@@ -73,9 +71,10 @@
   achievements:
     - "녹음 및 AI 재요약 과정에서도 사용자 편집 내용이 유지되도록 상태 관리 개선"
     - "인증 만료와 장시간 AI 처리에 대응하는 복구 구조 구현"
+    - "화면마다 흩어진 iOS·Android 권한 분기를 공통 훅으로 모아, 호출부에는 권한 가드 한 블록만 남김"
     - "의료진 베타 테스트 VOC를 반영하여 사용성 개선"
     - "AI 처리 상태를 단계별로 시각화하여 사용자 경험 개선"
-  posts: [/8th/, /10th/]
+  posts: [/8th/, /11th/, /10th/]
 
 - id: kiwisnap-saas
   name: "판매 채널 통합 관리 SaaS"

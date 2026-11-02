@@ -8,7 +8,7 @@
 <div class="about{% if include.compact %} about--compact{% endif %}">
   <div class="about__photo"><img src="{{ pf.photo | relative_url }}" alt="{{ pf.name }} 프로필"></div>
   <div>
-    <p class="about__title"><em>{{ include.years }}년차</em> {{ pf.portfolio.title_role }}</p>
+    <p class="about__title"><em>경력 {{ include.years }}년</em> {{ pf.role }}</p>
     <p class="about__tagline"><strong>{{ pf.name }}</strong> · {{ pf.portfolio.tagline }}</p>
     <ul class="about__contacts">
       <li><i class="fas fa-envelope" aria-hidden="true"></i><a href="mailto:{{ pf.email }}">{{ pf.email }}</a></li>
