@@ -37,7 +37,9 @@ skills:
     items: [React, TypeScript, Next.js, Vue 3, jQuery]
     primary: [React, TypeScript]   # 포트폴리오에서 강조 표시
   - group: "State & Data"
-    items: [TanStack Query, Zustand, Pinia, Axios]
+    items: [TanStack Query, Zustand, Pinia, Axios, Orval]
+  - group: "Styling"
+    items: [Tailwind CSS, SCSS]
   - group: "Platform"
     items: [Flutter WebView, Firebase]
 
