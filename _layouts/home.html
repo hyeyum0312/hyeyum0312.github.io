@@ -31,6 +31,10 @@ layout: default
   {{ content }}
 
   {% assign featured = site.posts | where: "featured", true %}
+  {% comment %} featured_order가 있는 글을 그 순서대로 맨 앞에, 나머지는 최신순 {% endcomment %}
+  {% assign pinned = featured | where_exp: "p", "p.featured_order" | sort: "featured_order" %}
+  {% assign unpinned = featured | where_exp: "p", "p.featured_order == nil" %}
+  {% assign featured = pinned | concat: unpinned %}
   {% if featured.size > 0 %}
     <section class="home-section">
       <h2 class="home-section__title">대표 글</h2>
