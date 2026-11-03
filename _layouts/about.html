@@ -14,7 +14,7 @@ layout: default
       <p class="home-hero__eyebrow">{{ r.role }}</p>
       <h1 class="resume-head__name">{{ r.name }}</h1>
       {% include career-length.html periods=site.data.career %}
-      {% include cv/contacts.html %}
+      {% include cv/contacts.html public=true %}
     </div>
   </section>
 
