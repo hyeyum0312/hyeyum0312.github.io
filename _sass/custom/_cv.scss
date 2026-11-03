@@ -278,6 +278,13 @@
         font-weight: 700;
       }
     }
+
+    &__tagline {
+      margin: 0.5em 0 0;
+      color: var(--doc-blue);
+      font-size: 1.05em;
+      font-weight: 700;
+    }
   }
 
   .doc-profile {

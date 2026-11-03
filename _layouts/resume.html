@@ -16,6 +16,7 @@ classes: cv-page
 <div id="main" role="main" class="home cv cv--resume">
   <header class="doc-head">
     <h1 class="doc-head__name">{{ pf.name }} <span>| {{ pf.role }}</span></h1>
+    {%- if pf.portfolio.tagline %}<p class="doc-head__tagline">{{ pf.portfolio.tagline }}</p>{% endif %}
   </header>
 
   <div class="doc-profile">
@@ -68,8 +69,7 @@ classes: cv-page
   <section class="doc-section doc-keep">
     <h2 class="doc-section__title">학력</h2>
     {%- for e in edu %}
-    <p><b>{{ e.school }}</b> {{ e.major }} {{ e.status }}</p>
-    <p class="doc-muted">{% include cv/period.html start=e.start end=e.end %}</p>
+    <p><b>{{ e.school }}</b> {{ e.major }} {{ e.status }} <span class="doc-muted">· {% include cv/period.html start=e.start end=e.end %}</span></p>
     {%- endfor %}
   </section>
   {%- endif %}

@@ -51,6 +51,25 @@
     font-size: 10pt;
     line-height: 1.6;
 
+    /* 섹션 사이 여백을 조금 줄여 쪽 수를 아낀다 */
+    .doc-head {
+      margin-bottom: 1.2em;
+    }
+
+    .doc-section {
+      margin-top: 1.1em;
+      padding-top: 1.1em;
+    }
+
+    .doc-profile__contacts li {
+      margin-bottom: 0.3em;
+    }
+
+    /* 포트폴리오 주소는 연락처에 이미 있다 */
+    .cv__more {
+      display: none;
+    }
+
     /* 제목은 다음 내용과 붙여 두고, 짧은 섹션과 항목은 쪽 사이에서 나뉘지 않게 한다 */
     .doc-section__title,
     .doc-job__title,
@@ -62,7 +81,6 @@
       break-after: avoid;
     }
 
-    .doc-keep,
     .doc-profile,
     .doc-project__meta,
     .doc-strength,
