@@ -2,6 +2,7 @@
   케이스 스터디 슬라이드. 기간·인원·기술 스택은 projects.yml에서 읽는다.
   - 1장: 문제 / 해결 + (상황 · Before · After 카드가 있으면) 하단 카드, screen이 있으면 오른쪽에 실제 화면
   - (screens가 있으면) 실제 화면을 나란히 보여주는 Screen Flow 장
+  - (code가 있으면) 핵심 로직 코드와 설명을 보여주는 Key Logic 장
   - 2장: 처리 흐름 + 설계 포인트 · 결과 · 배운 점
   role은 정보 박스에, verified(검증 방법)는 결과 아래에 보여준다. 정보 박스(기간 · 인원 · 스택 · 역할)는 첫 장에만 둔다.
   하단 카드도 처리 흐름도 없으면 설계 포인트 · 결과까지 1장에 담는다.
@@ -99,6 +100,29 @@
     </li>
     {%- endfor %}
   </ol>
+</section>
+{%- endif %}
+
+{%- if c.code %}
+<section class="slide slide--case">
+  {% include cv/slide-head.html eyebrow="Key Logic" title=case_title %}
+  <div class="logic">
+    <div class="logic__main">
+      <h3 class="logic__title">{{ c.code.title }}</h3>
+      <p class="logic__intro">{{ c.code.intro }}</p>
+      <pre class="logic__code"><code>{{ c.code.source | strip | xml_escape }}</code></pre>
+    </div>
+    <div class="logic__aside">
+      {% include cv/list.html items=c.code.notes class="card__list card__list--check" %}
+      {%- if c.code.side %}
+      <div class="card logic__side">
+        <h3 class="card__title">{{ c.code.side.title }}</h3>
+        <p>{% include cv/md.html text=c.code.side.desc %}</p>
+        {%- if c.code.side.note %}<p class="logic__note">{{ c.code.side.note }}</p>{% endif %}
+      </div>
+      {%- endif %}
+    </div>
+  </div>
 </section>
 {%- endif %}
 

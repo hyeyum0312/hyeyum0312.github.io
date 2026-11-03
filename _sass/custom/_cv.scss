@@ -1701,6 +1701,81 @@
   }
 }
 
+/* Key Logic: 핵심 로직 코드와 설명 */
+.logic {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+
+  &__title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 800;
+  }
+
+  &__intro {
+    margin: 0 0 12px;
+    color: #3b4250;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  &__code {
+    margin: 0;
+    padding: 14px 16px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--cv-dark);
+    color: #e6e9ef;
+    font-family: var(--cv-mono);
+    font-size: 11px;
+    // =>, === 같은 기호가 ⇒, ≡로 합쳐져 보이지 않게
+    font-variant-ligatures: none;
+    line-height: 1.45;
+    white-space: pre;
+
+    code {
+      padding: 0;
+      background: none;
+      color: inherit;
+      font-size: inherit;
+      font-weight: 400;
+    }
+  }
+
+  &__aside {
+    .card__list li {
+      font-size: 13px;
+    }
+  }
+
+  &__side {
+    margin-top: 14px;
+
+    p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  }
+
+  &__note {
+    margin-top: 8px !important;
+    color: var(--cv-muted);
+    font-size: 12px !important;
+  }
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+
+    &__code {
+      overflow-x: auto;
+    }
+  }
+}
+
 /* Screen Flow: 실제 화면을 단계별로 나란히 */
 .screens {
   display: grid;
