@@ -1,0 +1,39 @@
+{%- comment -%}
+  이력서의 "주요 경력" — 회사 → 프로젝트를 문서형으로 보여준다(기간 · 인원 · 개발 환경 · 주요 업무 · 주요 성과).
+  About 페이지는 카드형 cv/career.html을 그대로 쓴다.
+{%- endcomment -%}
+{%- for job in site.data.career %}
+<div class="doc-job">
+  <h3 class="doc-job__title">{% include cv/company-name.html job=job %} | {{ job.role }} <span>({% include cv/period.html start=job.start end=job.end %})</span></h3>
+  {%- assign names = "" | split: "" -%}
+  {%- for pid in job.projects -%}
+    {%- assign p = site.data.projects | where: "id", pid | first -%}
+    {%- if p -%}{%- assign names = names | push: p.name -%}{%- endif -%}
+  {%- endfor -%}
+  {%- if names.size > 1 %}<p class="doc-job__projects"><b>프로젝트</b>: {{ names | join: " / " }}</p>{% endif %}
+
+  {%- for pid in job.projects %}
+  {%- assign p = site.data.projects | where: "id", pid | first -%}
+  {%- if p %}
+  <article class="doc-project">
+    <h4 class="doc-project__name">{{ p.name }}</h4>
+    {%- if p.desc %}<p class="doc-project__desc">{{ p.desc }}</p>{% endif %}
+    <dl class="doc-project__meta">
+      <dt>프로젝트 기간</dt><dd>{% include cv/period.html start=p.start end=p.end ongoing="진행 중" %}</dd>
+      {%- if p.team and p.team != "" %}{% unless p.team contains "TODO:" %}<dt>참여 인원</dt><dd>{{ p.team }}</dd>{% endunless %}{% endif %}
+      <dt>개발 환경</dt><dd>{{ p.stack | join: " · " }}</dd>
+    </dl>
+    {%- if p.tasks and p.tasks.size > 0 %}
+    <h5 class="doc-project__label">주요 업무</h5>
+    {% include cv/list.html items=p.tasks class="doc-list" %}
+    {%- endif %}
+    {%- if p.achievements and p.achievements.size > 0 %}
+    <h5 class="doc-project__label">주요 성과</h5>
+    {% include cv/list.html items=p.achievements class="doc-list" %}
+    {%- endif %}
+    {% include cv/related-posts.html urls=p.posts absolute=true %}
+  </article>
+  {%- endif %}
+  {%- endfor %}
+</div>
+{%- endfor -%}

@@ -2,6 +2,7 @@
   재직 기간 목록으로 총 경력을 계산한다. 시작 월과 끝 월을 모두 포함하고, end가 비어 있으면 현재까지로 본다.
   빌드 시각 기준으로 먼저 계산하고, 페이지를 연 날짜 기준으로 스크립트가 다시 계산한다.
   include.years_only가 true면 빌드 시각 기준 연차(숫자)만 출력한다.
+  include.tag · include.class · include.prefix로 감싸는 태그와 앞 문구를 바꿀 수 있다(기본 <p>, "총 경력 ").
 {%- endcomment -%}
 {%- assign now_y = site.time | date: "%Y" | plus: 0 -%}
 {%- assign now_m = site.time | date: "%m" | plus: 0 -%}
@@ -20,8 +21,10 @@
 {%- endfor -%}
 {%- assign years = total | divided_by: 12 -%}
 {%- assign rest = total | modulo: 12 -%}
+{%- assign tag = include.tag | default: "p" -%}
+{%- assign prefix = include.prefix | default: "총 경력 " -%}
 {%- if include.years_only -%}{{ years }}{%- else -%}
-<p class="resume-head__career" data-career-periods='{{ include.periods | jsonify }}'>총 경력 {{ years }}년{% if rest > 0 %} {{ rest }}개월{% endif %}</p>
+<{{ tag }} class="{{ include.class | default: 'resume-head__career' }}" data-career-periods='{{ include.periods | jsonify }}' data-prefix="{{ prefix }}">{{ prefix }}{{ years }}년{% if rest > 0 %} {{ rest }}개월{% endif %}</{{ tag }}>
 <script>
   (function () {
     var el = document.currentScript.previousElementSibling;
@@ -34,7 +37,7 @@
         return sum + (e[0] * 12 + e[1]) - (s[0] * 12 + s[1]) + 1;
       }, 0);
       var y = Math.floor(total / 12), m = total % 12;
-      el.textContent = '총 경력 ' + y + '년' + (m ? ' ' + m + '개월' : '');
+      el.textContent = el.getAttribute('data-prefix') + y + '년' + (m ? ' ' + m + '개월' : '');
     } catch (e) {}
   })();
 </script>

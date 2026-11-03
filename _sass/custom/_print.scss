@@ -50,49 +50,24 @@
     padding: 0;
     font-size: 10pt;
 
-    .home-section {
-      margin-top: 1.8em;
-    }
-
-    .home-section__title {
-      font-size: 1.5em;
-    }
-
-    .resume-project__name {
-      font-size: 1.1em;
-    }
-
-    .resume-job__company {
-      font-size: 1.35em;
-    }
-
-    /* 회사명·프로젝트 제목은 다음 내용과 붙여 두고, 긴 프로젝트 카드는 쪽 사이에서 나뉠 수 있게 한다 */
-    .resume-job__head,
-    .resume-job__desc,
-    .resume-project__head,
-    .resume-project__desc,
-    .resume-project__team {
+    /* 제목은 다음 내용과 붙여 두고, 짧은 섹션과 항목은 쪽 사이에서 나뉘지 않게 한다 */
+    .doc-section__title,
+    .doc-job__title,
+    .doc-job__projects,
+    .doc-project__name,
+    .doc-project__desc,
+    .doc-project__label,
+    .doc-strength h3 {
       break-after: avoid;
     }
 
-    .resume-project {
-      break-inside: auto;
-      box-decoration-break: clone;
-      -webkit-box-decoration-break: clone;
-    }
-
-    .cv-keep,
+    .doc-keep,
+    .doc-profile,
+    .doc-project__meta,
+    .doc-strength,
     .resume-project__posts,
-    .resume-project__stack {
-      break-inside: avoid;
-    }
-
     .cv li {
       break-inside: avoid;
-    }
-
-    .resume-skills {
-      grid-template-columns: 8em 1fr;
     }
   }
 

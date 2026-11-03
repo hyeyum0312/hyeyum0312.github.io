@@ -249,154 +249,199 @@
    이력서 (A4 세로)
    ========================================================================== */
 .cv--resume {
-  .cv-resume-head {
-    margin-bottom: 1.4em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid var(--cv-line);
+  --doc-navy: #1f3a5f;
+  --doc-blue: #3c6497;
+  --doc-sky: #5b86c0;
+  --doc-rule: #b9bec7;
+
+  font-size: 15px;
+  line-height: 1.75;
+
+  p {
+    margin: 0 0 0.6em;
+  }
+
+  .doc-head {
+    margin-bottom: 1.8em;
+    padding-bottom: 0.5em;
+    border-bottom: 1.5px solid var(--doc-sky);
 
     &__name {
       margin: 0;
-      font-size: 3em;
-      font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.04em;
-    }
+      color: var(--doc-navy);
+      font-size: 2.6em;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
 
-    .resume-head__career {
-      margin: 0.3em 0 0;
-      color: var(--cv-muted);
-      font-size: 0.9em;
-      font-weight: 700;
+      span {
+        font-weight: 700;
+      }
     }
   }
 
-  .home-section__title {
-    position: relative;
-    margin: 0 0 1em;
-    padding-bottom: 0.45em;
-    border-bottom: 1px solid var(--cv-line);
-    font-size: 1.6em;
-    font-weight: 900;
-    letter-spacing: -0.03em;
+  .doc-profile {
+    display: flex;
+    gap: 1.4em;
+    align-items: flex-start;
+    margin-bottom: 1.6em;
 
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      width: 5em;
-      height: 2px;
-      background: var(--cv-accent);
-    }
-  }
+    &__photo {
+      width: 150px;
+      flex: none;
+      object-fit: cover;
 
-  .resume-intro {
-    margin-bottom: 1.2em;
-  }
-
-  .resume-job {
-    margin-bottom: 2em;
-
-    &__head {
-      align-items: center;
-      padding-bottom: 0.6em;
-      border-bottom: 0;
-    }
-
-    &__company {
-      font-size: 1.35em;
-      font-weight: 900;
-    }
-
-    &__role {
-      padding: 0.15em 0.6em;
-      border-radius: 5px;
-      background: var(--cv-accent-soft);
-      color: var(--cv-accent-dark);
-      font-size: 0.75em;
-      font-weight: 700;
-    }
-
-    &__meta {
-      margin-left: auto;
-      color: var(--cv-accent);
-      font-family: var(--cv-mono);
-      font-size: 0.75em;
-      font-weight: 700;
-    }
-
-    &__desc {
-      margin: 0 0 0.75em;
-      color: var(--cv-muted);
-      font-size: 0.85em;
-    }
-  }
-
-  .resume-project {
-    margin-bottom: 0.9em;
-    padding: 1.2em 1.4em;
-    border: 1px solid var(--cv-line);
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(21, 23, 28, 0.04);
-
-    &__name {
-      color: var(--cv-ink);
-      font-size: 1.1em;
-      font-weight: 900;
-    }
-
-    .resume-job__meta {
-      margin-left: 0;
-    }
-
-    &__desc {
-      color: #3b4250;
-    }
-
-    &__stack {
-      @extend .chips;
-      margin: 0.75em 0 0;
-
-      li {
-        @extend .chips__item;
-        padding: 0.2em 0.6em;
-        border-radius: 6px;
-        font-size: 0.7em;
+      &--real {
+        aspect-ratio: 3 / 4;
       }
     }
 
-    &__achievements {
-      @extend .card__list;
-      @extend .card__list--check;
-      margin-top: 1em;
-    }
-
-    &__tasks h5 {
-      margin: 0.9em 0 0.4em;
-      color: var(--cv-muted);
-      font-family: var(--cv-mono);
-      font-size: 0.68em;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-    }
-  }
-
-  .resume-skills {
-    dt {
-      font-family: var(--cv-mono);
-      font-size: 0.75em;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-    }
-
-    .chips {
+    &__contacts {
       margin: 0;
+      padding: 0;
+      list-style: none;
+      font-weight: 700;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.6em;
+        margin: 0 0 0.55em;
+      }
+
+      i {
+        width: 1.1em;
+        color: var(--doc-blue);
+        text-align: center;
+      }
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    @media screen and (max-width: 560px) {
+      flex-direction: column;
     }
   }
 
-  .checks li {
-    font-size: 0.9em;
+  .doc-sep {
+    margin: 0 0.35em;
+    color: var(--cv-muted);
+  }
+
+  .doc-section {
+    padding-top: 1.4em;
+    margin-top: 1.4em;
+    border-top: 1px solid var(--doc-rule);
+
+    &__title {
+      margin: 0 0 0.8em;
+      color: var(--doc-blue);
+      font-size: 1.6em;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  .doc-profile + .doc-section {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .doc-muted {
+    color: var(--cv-muted);
+  }
+
+  .doc-career {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0 0 0.5em;
+    }
+  }
+
+  .doc-skills {
+    margin: 0;
+
+    dt {
+      font-weight: 800;
+    }
+
+    dd {
+      margin: 0.15em 0 0.9em;
+    }
+  }
+
+  .doc-list {
+    margin: 0.3em 0 0.9em;
+    padding-left: 1.4em;
+
+    li {
+      margin: 0 0 0.3em;
+    }
+  }
+
+  .doc-job {
+    margin-bottom: 1.8em;
+
+    &__title {
+      margin: 0.4em 0 0.4em;
+      color: var(--doc-sky);
+      font-size: 1.4em;
+      font-weight: 800;
+
+      span {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .doc-project {
+    margin: 1.2em 0 0;
+
+    &__name {
+      margin: 0 0 0.3em;
+      color: var(--doc-blue);
+      font-size: 1.15em;
+      font-weight: 800;
+    }
+
+    &__meta {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.2em 0.8em;
+      margin: 0.4em 0 0.6em;
+
+      dt {
+        font-weight: 800;
+      }
+
+      dd {
+        margin: 0;
+      }
+    }
+
+    &__label {
+      margin: 0.8em 0 0.2em;
+      font-size: 1em;
+      font-weight: 800;
+    }
+  }
+
+  .doc-strength {
+    h3 {
+      margin: 1em 0 0.4em;
+      font-size: 1.2em;
+      font-weight: 800;
+    }
+  }
+
+  .resume-project__posts {
+    margin-top: 0.4em;
   }
 }
 

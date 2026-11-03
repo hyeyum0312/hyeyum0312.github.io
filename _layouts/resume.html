@@ -3,73 +3,94 @@ layout: default
 classes: cv-page
 ---
 
+{%- comment -%}
+  이력서 — 문서형(A4 세로). 순서: 소개 · 총 경력 · 기술 스택 · 학력 · 주요 경력 · 업무 강점 · AI 활용 · 스터디
+  전화번호 · 생년월일 · 실제 사진 · 학력 · 회사 실명은 _data/private.yml이 있을 때만(로컬 PDF) 나온다.
+{%- endcomment -%}
 {% assign pf = site.data.profile %}
-{% capture years %}{% include career-length.html periods=site.data.career years_only=true %}{% endcapture %}
-{% assign years = years | strip %}
+{% assign pv = site.data.private %}
 
-<style>@page { size: A4; margin: 14mm 13mm; }</style>
+<style>@page { size: A4; margin: 16mm 15mm; }</style>
 
-<div id="main" role="main" class="home resume cv cv--resume">
-  <header class="cv-resume-head">
-    <p class="cv-eyebrow">Resume · {{ pf.role }}</p>
-    <h1 class="cv-resume-head__name">{{ pf.name }}<span class="hero__dot"></span></h1>
-    {% include career-length.html periods=site.data.career %}
+<div id="main" role="main" class="home cv cv--resume">
+  <header class="doc-head">
+    <h1 class="doc-head__name">{{ pf.name }} <span>| {{ pf.role }}</span></h1>
   </header>
-  {% include cv/profile-head.html years=years compact=true %}
 
-  <section class="home-section">
-    <p class="cv-eyebrow">Profile</p>
-    <h2 class="home-section__title">소개</h2>
-    <div class="resume-intro">
-      {% for line in pf.intro %}<p>{{ line }}</p>{% endfor %}
-    </div>
+  <div class="doc-profile">
+    <img class="doc-profile__photo{% if pv.photo %} doc-profile__photo--real{% endif %}" src="{{ pv.photo | default: pf.photo | relative_url }}" alt="{{ pf.name }} 프로필">
+    <ul class="doc-profile__contacts">
+      {%- if pv.phone and pv.phone != "" %}
+      <li><i class="fas fa-phone" aria-hidden="true"></i><a href="tel:{{ pv.phone | remove: '.' | remove: '-' }}">{{ pv.phone }}</a></li>
+      {%- endif %}
+      <li><i class="fas fa-envelope" aria-hidden="true"></i><a href="mailto:{{ pf.email }}">{{ pf.email }}</a></li>
+      {%- if pv.birth and pv.birth != "" %}
+      <li><i class="fas fa-birthday-cake" aria-hidden="true"></i>{{ pv.birth }}</li>
+      {%- endif %}
+      <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>{{ pf.location }}</li>
+      <li><i class="fas fa-link" aria-hidden="true"></i><a href="{{ pf.github }}">GitHub</a><span class="doc-sep">|</span><a href="{{ '/portfolio/' | absolute_url }}">Portfolio</a><span class="doc-sep">|</span><a href="{{ pf.blog }}">Blog</a></li>
+    </ul>
+  </div>
+
+  <section class="doc-section">
+    <h2 class="doc-section__title">소개</h2>
+    {% for line in pf.intro %}<p>{{ line }}</p>{% endfor %}
   </section>
 
-  <section class="home-section">
-    <p class="cv-eyebrow">Career</p>
-    <h2 class="home-section__title">경력</h2>
-    {% include cv/career.html absolute=true %}
-  </section>
-
-  <section class="home-section cv-keep">
-    <p class="cv-eyebrow">Skill</p>
-    <h2 class="home-section__title">기술 스택</h2>
-    <dl class="resume-skills">
-      {% for g in pf.skills %}
-        <dt>{{ g.group }}</dt>
-        <dd><ul class="chips">{% for t in g.items %}<li class="chips__item{% if g.primary contains t %} chips__item--fill{% endif %}">{{ t }}</li>{% endfor %}</ul></dd>
-      {% endfor %}
-    </dl>
-  </section>
-
-  <section class="home-section cv-keep">
-    <p class="cv-eyebrow">AI</p>
-    <h2 class="home-section__title">AI 활용</h2>
-    {% include cv/list.html items=pf.ai class="card__list card__list--check" %}
-    {% include cv/related-posts.html urls=pf.ai_posts absolute=true %}
-  </section>
-
-  {%- comment -%} 학력은 _data/private.yml에만 있어 로컬 PDF에서만 나온다 {%- endcomment -%}
-  {%- assign edu = site.data.private.education -%}
-  {%- if edu and edu.size > 0 %}
-  <section class="home-section cv-keep">
-    <p class="cv-eyebrow">Education</p>
-    <h2 class="home-section__title">학력</h2>
-    <ul class="cv-edu">
-      {%- for e in edu %}
-      <li>
-        <div><strong>{{ e.school }}</strong> <span>{{ e.major }}</span></div>
-        <p>{% include cv/period.html start=e.start end=e.end %} · {{ e.status }}{% if e.gpa %} · 학점 {{ e.gpa }}{% endif %}</p>
-      </li>
+  <section class="doc-section doc-keep">
+    {% include career-length.html periods=site.data.career tag="h2" class="doc-section__title" prefix="총 경력 : " %}
+    <ul class="doc-career">
+      {%- for job in site.data.career %}
+      <li><b>{% include cv/period.html start=job.start end=job.end %}</b> {% include cv/company-name.html job=job %} | {{ job.role }}</li>
       {%- endfor %}
     </ul>
   </section>
+
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">기술 스택</h2>
+    <dl class="doc-skills">
+      {%- for g in pf.skills %}
+      <dt>{{ g.group }}</dt>
+      <dd>{{ g.items | join: " · " }}</dd>
+      {%- endfor %}
+    </dl>
+  </section>
+
+  {%- assign edu = pv.education -%}
+  {%- if edu and edu.size > 0 %}
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">학력</h2>
+    {%- for e in edu %}
+    <p><b>{{ e.school }}</b> {{ e.major }} {{ e.status }}</p>
+    <p class="doc-muted">{% include cv/period.html start=e.start end=e.end %}</p>
+    {%- endfor %}
+  </section>
   {%- endif %}
 
-  <section class="home-section cv-keep">
-    <p class="cv-eyebrow">Study</p>
-    <h2 class="home-section__title">스터디</h2>
-    {% include cv/list.html items=pf.studies class="card__list card__list--check" %}
+  <section class="doc-section">
+    <h2 class="doc-section__title">주요 경력</h2>
+    {% include cv/resume-career.html %}
+  </section>
+
+  <section class="doc-section">
+    <h2 class="doc-section__title">업무 강점</h2>
+    {%- for s in pf.strengths %}
+    <div class="doc-strength">
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.desc }}</p>
+    </div>
+    {%- endfor %}
+  </section>
+
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">AI 활용</h2>
+    {% include cv/list.html items=pf.ai class="doc-list" %}
+    {% include cv/related-posts.html urls=pf.ai_posts absolute=true %}
+  </section>
+
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">스터디</h2>
+    {% include cv/list.html items=pf.studies class="doc-list" %}
   </section>
 
   <p class="cv__more">
