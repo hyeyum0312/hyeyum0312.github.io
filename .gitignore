@@ -32,3 +32,6 @@ _site
 _data/private.yml
 pdf/
 images/private/
+
+# IDE 설정
+.idea/
