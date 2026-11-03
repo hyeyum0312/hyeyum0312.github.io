@@ -381,7 +381,13 @@
     padding-left: 1.4em;
 
     li {
-      margin: 0 0 0.3em;
+      margin: 0 0 0.45em;
+    }
+
+    // "**키워드** — 설명" 형식에서 키워드를 먼저 읽히게
+    strong {
+      color: var(--doc-navy);
+      font-weight: 800;
     }
   }
 
@@ -401,7 +407,9 @@
   }
 
   .doc-project {
-    margin: 1.2em 0 0;
+    margin: 1.4em 0 0;
+    padding: 0.2em 0 0.2em 1.1em;
+    border-left: 3px solid var(--cv-accent-soft);
 
     &__name {
       margin: 0 0 0.3em;
@@ -413,8 +421,12 @@
     &__meta {
       display: grid;
       grid-template-columns: max-content 1fr;
-      gap: 0.2em 0.8em;
-      margin: 0.4em 0 0.6em;
+      gap: 0.15em 0.9em;
+      margin: 0.5em 0 0.6em;
+      padding: 0.6em 0.9em;
+      border-radius: 8px;
+      background: #f6f8fb;
+      font-size: 0.93em;
 
       dt {
         font-weight: 800;
@@ -426,9 +438,11 @@
     }
 
     &__label {
-      margin: 0.8em 0 0.2em;
-      font-size: 1em;
+      margin: 1em 0 0.3em;
+      color: var(--cv-muted);
+      font-size: 0.85em;
       font-weight: 800;
+      letter-spacing: 0.02em;
     }
   }
 
