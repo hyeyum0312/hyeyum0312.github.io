@@ -8,7 +8,6 @@ main:
     url: /resume/
   - title: "Portfolio"
     url: /portfolio/
-  - title: "Tags"
-    url: /tags/
+  # Tags(/tags/)는 글이 적어 메뉴에서만 뺐다. 페이지와 글 아래 태그 링크는 그대로 둔다
   - title: "GitHub"
     url: https://github.com/hyeyum0312
