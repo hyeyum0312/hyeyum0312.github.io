@@ -35,7 +35,7 @@ skill_usage:
   - name: "Flutter WebView"
     desc: "네이티브 브릿지, 권한 처리, 백그라운드 녹음, FCM 수신과 화면 이동 (MediSound · MOA)"
   - name: "Vitest"
-    desc: "늦은 응답 · 관측 만료 · 경로 전환 등 상태 경계의 회귀 테스트 1,500여 개 (대중교통)"
+    desc: "늦은 응답 · 관측 만료 · 경로 전환 등 상태 경계의 회귀 테스트 케이스 1,500여 개 (대중교통)"
   - name: "Next.js"
     desc: "관리자 · 백오피스, 모노레포 기반 앱 웹 화면"
   - name: "Vue 3 · Pinia"

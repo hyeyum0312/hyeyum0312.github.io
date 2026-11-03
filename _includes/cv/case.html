@@ -3,7 +3,7 @@
   - 1장: 문제 / 해결 + (상황 · Before · After 카드가 있으면) 하단 카드, screen이 있으면 오른쪽에 실제 화면
   - (screens가 있으면) 실제 화면을 나란히 보여주는 Screen Flow 장
   - 2장: 처리 흐름 + 설계 포인트 · 결과 · 배운 점
-  role은 정보 박스에, verified(검증 방법)는 결과 아래에 보여준다.
+  role은 정보 박스에, verified(검증 방법)는 결과 아래에 보여준다. 정보 박스(기간 · 인원 · 스택 · 역할)는 첫 장에만 둔다.
   하단 카드도 처리 흐름도 없으면 설계 포인트 · 결과까지 1장에 담는다.
 {%- endcomment -%}
 {%- assign c = include.case -%}
@@ -89,7 +89,7 @@
 
 {%- if show_screens and c.screens and c.screens.size > 0 %}
 <section class="slide slide--case">
-  {% include cv/slide-head.html eyebrow="Screen Flow" title=case_title project=cp stack=c.stack role=c.role %}
+  {% include cv/slide-head.html eyebrow="Screen Flow" title=case_title %}
   <ol class="screens">
     {%- for s in c.screens %}
     <li class="screens__item">
@@ -104,7 +104,7 @@
 
 {%- if has_cards or has_flow %}
 <section class="slide slide--case">
-  {% include cv/slide-head.html eyebrow="Architecture & Result" title=case_title project=cp stack=c.stack role=c.role %}
+  {% include cv/slide-head.html eyebrow="Architecture & Result" title=case_title %}
 
   <div class="slide__row{% if has_flow %} slide__row--flow{% endif %}">
     {%- if has_flow %}

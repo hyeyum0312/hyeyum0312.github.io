@@ -7,7 +7,7 @@ classes: cv-page
 {% assign pt = pf.portfolio %}
 {% assign pv = site.data.private %}
 {% assign cases = site.data.cases | where_exp: "c", "c.draft != true" %}
-{% capture years %}{% include career-length.html periods=site.data.career years_only=true %}{% endcapture %}
+{% capture years %}{% include career-length.html periods=site.data.career text_only=true %}{% endcapture %}
 {% assign years = years | strip %}
 
 <style>@page { size: 1280px 720px; margin: 0; }</style>
@@ -22,7 +22,7 @@ classes: cv-page
       <p class="hero__sub">{{ pt.subtitle }}</p>
       <span class="hero__rule"></span>
       <ul class="pills">
-        <li class="pills__item pills__item--fill">프론트엔드 경력 {{ years }}년</li>
+        <li class="pills__item pills__item--fill">프론트엔드 경력 {{ years }}</li>
         {%- for t in pt.tags %}<li class="pills__item">{{ t }}</li>{% endfor %}
       </ul>
     </div>
