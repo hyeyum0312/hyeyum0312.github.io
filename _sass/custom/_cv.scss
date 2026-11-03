@@ -1591,6 +1591,8 @@
     img {
       display: block;
       width: 100%;
+      // 테마의 figure img 하단 여백(1em)이 프레임 안에 흰 띠로 남지 않게
+      margin: 0;
     }
   }
 
