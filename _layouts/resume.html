@@ -16,6 +16,7 @@ classes: cv-page
 <div id="main" role="main" class="home cv cv--resume">
   <header class="doc-head">
     <h1 class="doc-head__name">{{ pf.name }} <span>| {{ pf.role }}</span></h1>
+    {%- if pf.slogan %}<p class="doc-head__slogan">{{ pf.slogan }}</p>{% endif %}
     {%- if pf.portfolio.tagline %}<p class="doc-head__tagline">{{ pf.portfolio.tagline }}</p>{% endif %}
   </header>
 

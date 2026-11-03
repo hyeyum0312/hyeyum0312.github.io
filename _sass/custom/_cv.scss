@@ -279,11 +279,18 @@
       }
     }
 
-    &__tagline {
-      margin: 0.5em 0 0;
+    &__slogan {
+      margin: 0.6em 0 0;
       color: var(--doc-blue);
-      font-size: 1.05em;
-      font-weight: 700;
+      font-size: 1.25em;
+      font-weight: 800;
+    }
+
+    &__tagline {
+      margin: 0.3em 0 0;
+      color: #3b4250;
+      font-size: 0.95em;
+      line-height: 1.6;
     }
   }
 
