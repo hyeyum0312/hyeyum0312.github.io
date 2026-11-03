@@ -52,10 +52,14 @@ classes: cv-page
   <section class="doc-section doc-keep">
     <h2 class="doc-section__title">기술 스택</h2>
     <dl class="doc-skills">
-      {%- for g in pf.skills %}
-      <dt>{{ g.group }}</dt>
-      <dd>{{ g.items | join: " · " }}</dd>
+      {%- for t in pf.skill_usage %}
+      <dt>{{ t.name }}</dt>
+      <dd>{{ t.desc }}</dd>
       {%- endfor %}
+      {%- if pf.skill_etc %}
+      <dt>그 외</dt>
+      <dd>{{ pf.skill_etc | join: " · " }}</dd>
+      {%- endif %}
     </dl>
   </section>
 

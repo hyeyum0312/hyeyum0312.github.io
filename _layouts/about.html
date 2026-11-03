@@ -53,7 +53,7 @@ layout: default
 
   <section class="home-section">
     <h2 class="home-section__title">AI 활용</h2>
-    <ul class="resume-list">{% for t in r.ai %}<li>{{ t }}</li>{% endfor %}</ul>
+    <ul class="resume-list">{% for t in r.ai %}<li>{% include cv/md.html text=t %}</li>{% endfor %}</ul>
     {% include cv/related-posts.html urls=r.ai_posts %}
   </section>
 
