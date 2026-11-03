@@ -114,6 +114,8 @@
 
 - id: moa-back-press
   project: moa
+  # 직접 맡은 작업이 아니라 숨김 — 삭제하지 않고 보관
+  draft: true
   # 정보 박스에 보여줄 이 케이스 관련 기술 (없으면 프로젝트 전체 스택)
   stack: [React, TypeScript, Zustand, Flutter WebView]
   title: "뒤로가기 처리 구조 개선"
