@@ -60,7 +60,7 @@
 
 - id: medisound
   name: "MediSound"
-  desc: "의료 AI 음성 기록 서비스 (앱으로 출시 후 웹 서비스까지 확장)"
+  desc: "의료 AI 음성 기록 서비스 (Android APK · iOS 테스트 배포로 의료진 베타 운영, 이후 웹 서비스로 확장)"
   start: "2024-12"
   end: "2025-10"
   team: "기획 1 · 디자인 1 · FE 2 · BE 1"
