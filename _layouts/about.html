@@ -1,7 +1,10 @@
 ---
 layout: default
 ---
-
+{%- comment -%}
+  블로그 소개(About). 이력서와 겹치지 않게 슬로건 · 한 줄 소개 · 이 블로그에서 다루는 주제만 두고,
+  경력 · 기술 스택 같은 상세는 이력서 · 포트폴리오로 보낸다.
+{%- endcomment -%}
 {% assign r = site.data.profile %}
 
 <div id="main" role="main" class="home resume">
@@ -16,51 +19,38 @@ layout: default
   </section>
 
   <section class="home-section">
-    <h2 class="home-section__title">소개</h2>
+    <h2 class="home-section__title">{{ r.slogan }}</h2>
     <div class="resume-intro">
-      {%- if r.portfolio.tagline %}<p><strong>{{ r.portfolio.tagline }}</strong></p>{% endif %}
-      {% for line in r.intro %}<p>{{ line }}</p>{% endfor %}
+      <p>{{ r.portfolio.tagline }}</p>
+      <p>이 블로그에는 그 과정에서 부딪힌 문제와, 어떤 기준으로 판단했는지를 기록합니다.</p>
     </div>
   </section>
 
   <section class="home-section">
-    <h2 class="home-section__title">업무 강점</h2>
+    <h2 class="home-section__title">이 블로그에서 다루는 것</h2>
     <div class="featured-grid">
-      {% for s in r.strengths %}
-        <div class="resume-card">
-          <h3 class="featured-card__title">{{ s.title }}</h3>
-          <p class="featured-card__excerpt">{{ s.desc }}</p>
-        </div>
-      {% endfor %}
+      {%- for t in r.blog_topics %}
+      <div class="resume-card">
+        <h3 class="featured-card__title">{{ t.title }}</h3>
+        <p class="featured-card__excerpt">{{ t.desc }}</p>
+        <ul class="about-topic__posts">
+          {%- for url in t.posts %}
+          {%- assign post = site.posts | where: "url", url | first -%}
+          {%- if post %}<li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>{% endif %}
+          {%- endfor %}
+        </ul>
+      </div>
+      {%- endfor %}
     </div>
   </section>
 
   <section class="home-section">
-    <h2 class="home-section__title">경력</h2>
-    {% include cv/career.html collapse_tasks=true %}
-  </section>
-
-  <section class="home-section">
-    <h2 class="home-section__title">기술 스택</h2>
-    <dl class="resume-skills">
-      {% for g in r.skills %}
-        <dt>{{ g.group }}</dt>
-        <dd>
-          <ul class="home-hero__stack">{% for t in g.items %}<li>{{ t }}</li>{% endfor %}</ul>
-        </dd>
-      {% endfor %}
-    </dl>
-  </section>
-
-  <section class="home-section">
-    <h2 class="home-section__title">AI 활용</h2>
-    <ul class="resume-list">{% for t in r.ai %}<li>{% include cv/md.html text=t %}</li>{% endfor %}</ul>
-    {% include cv/related-posts.html urls=r.ai_posts %}
-  </section>
-
-  <section class="home-section">
-    <h2 class="home-section__title">스터디</h2>
-    <ul class="resume-list">{% for t in r.studies %}<li>{{ t }}</li>{% endfor %}</ul>
+    <h2 class="home-section__title">더 알아보기</h2>
+    <p>경력과 프로젝트에서 맡은 일은 이력서에, 문제를 어떻게 풀었는지는 포트폴리오에 정리했습니다.</p>
+    <div class="home-hero__links">
+      <a class="home-btn home-btn--primary" href="{{ '/resume/' | relative_url }}"><i class="fas fa-file-alt" aria-hidden="true"></i>이력서</a>
+      <a class="home-btn" href="{{ '/portfolio/' | relative_url }}"><i class="fas fa-folder-open" aria-hidden="true"></i>포트폴리오</a>
+    </div>
   </section>
 
   {{ content }}
