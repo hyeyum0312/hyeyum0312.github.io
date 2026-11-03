@@ -1,6 +1,6 @@
 {%- comment -%}
   이력서의 "주요 경력" — 회사 → 프로젝트를 문서형으로 보여준다(기간 · 인원 · 개발 환경 · 주요 업무 · 주요 성과).
-  About 페이지는 카드형 cv/career.html을 그대로 쓴다.
+  About 페이지는 카드형 cv/career.html을 그대로 쓴다. 출력물에서는 링크가 쓸모없어 관련 글 목록은 넣지 않는다.
 {%- endcomment -%}
 {%- for job in site.data.career %}
 <div class="doc-job">
@@ -31,7 +31,6 @@
     <h5 class="doc-project__label">주요 성과</h5>
     {% include cv/list.html items=p.achievements class="doc-list" %}
     {%- endif %}
-    {% include cv/related-posts.html urls=p.posts absolute=true %}
   </article>
   {%- endif %}
   {%- endfor %}

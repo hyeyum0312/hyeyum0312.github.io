@@ -330,6 +330,11 @@
     color: var(--cv-muted);
   }
 
+  .doc-label {
+    font-size: 0.85em;
+    font-weight: 600;
+  }
+
   .doc-section {
     padding-top: 1.4em;
     margin-top: 1.4em;
@@ -341,6 +346,14 @@
       font-size: 1.6em;
       font-weight: 800;
       letter-spacing: -0.02em;
+    }
+
+    &__link {
+      margin-left: 0.5em;
+      color: var(--cv-muted);
+      font-size: 0.5em;
+      font-weight: 600;
+      letter-spacing: 0;
     }
   }
 
@@ -365,6 +378,9 @@
   }
 
   .doc-skills {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.35em 1.2em;
     margin: 0;
 
     dt {
@@ -372,7 +388,7 @@
     }
 
     dd {
-      margin: 0.15em 0 0.9em;
+      margin: 0;
     }
   }
 

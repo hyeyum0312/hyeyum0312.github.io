@@ -6,6 +6,7 @@ classes: cv-page
 {%- comment -%}
   이력서 — 문서형(A4 세로). 순서: 소개 · 총 경력 · 기술 스택 · 학력 · 주요 경력 · 업무 강점 · AI 활용 · 스터디
   전화번호 · 생년월일 · 실제 사진 · 학력 · 회사 실명은 _data/private.yml이 있을 때만(로컬 PDF) 나온다.
+  출력해서 볼 수도 있으므로 링크는 주소를 글자로 보여주고, 블로그 글 목록은 넣지 않는다.
 {%- endcomment -%}
 {% assign pf = site.data.profile %}
 {% assign pv = site.data.private %}
@@ -28,7 +29,9 @@ classes: cv-page
       <li><i class="fas fa-birthday-cake" aria-hidden="true"></i>{{ pv.birth }}</li>
       {%- endif %}
       <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>{{ pf.location }}</li>
-      <li><i class="fas fa-link" aria-hidden="true"></i><a href="{{ pf.github }}">GitHub</a><span class="doc-sep">|</span><a href="{{ '/portfolio/' | absolute_url }}">Portfolio</a><span class="doc-sep">|</span><a href="{{ pf.blog }}">Blog</a></li>
+      <li><i class="fab fa-github" aria-hidden="true"></i><a href="{{ pf.github }}">{{ pf.github | remove: "https://" }}</a></li>
+      <li><i class="fas fa-folder-open" aria-hidden="true"></i><a href="{{ '/portfolio/' | absolute_url }}">{{ '/portfolio/' | absolute_url | remove: "https://" }}</a><span class="doc-muted doc-label">포트폴리오</span></li>
+      <li><i class="fas fa-pen" aria-hidden="true"></i><a href="{{ pf.blog }}">{{ pf.blog | remove: "https://" }}</a><span class="doc-muted doc-label">블로그</span></li>
     </ul>
   </div>
 
@@ -85,8 +88,23 @@ classes: cv-page
   <section class="doc-section doc-keep">
     <h2 class="doc-section__title">AI 활용</h2>
     {% include cv/list.html items=pf.ai class="doc-list" %}
-    {% include cv/related-posts.html urls=pf.ai_posts absolute=true %}
   </section>
+
+  {%- comment -%} 블로그 대표 글(featured) — featured_order가 있는 글을 먼저, 나머지는 최신순 {%- endcomment -%}
+  {%- assign featured = site.posts | where: "featured", true -%}
+  {%- assign ordered = featured | where_exp: "p", "p.featured_order" | sort: "featured_order" -%}
+  {%- assign rest = featured | where_exp: "p", "p.featured_order == nil" -%}
+  {%- assign blog_posts = ordered | concat: rest -%}
+  {%- if blog_posts.size > 0 %}
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">기술 블로그 <a class="doc-section__link" href="{{ pf.blog }}">{{ pf.blog | remove: "https://" }}</a></h2>
+    <ul class="doc-list">
+      {%- for post in blog_posts %}
+      <li><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
 
   <section class="doc-section doc-keep">
     <h2 class="doc-section__title">스터디</h2>
@@ -94,7 +112,7 @@ classes: cv-page
   </section>
 
   <p class="cv__more">
-    프로젝트별 문제 해결 과정은 <a href="{{ '/portfolio/' | absolute_url }}">포트폴리오</a>에서 볼 수 있습니다.
+    프로젝트별 문제 해결 과정은 포트폴리오 <a href="{{ '/portfolio/' | absolute_url }}">{{ '/portfolio/' | absolute_url | remove: "https://" }}</a>에서 볼 수 있습니다.
   </p>
 
   {{ content }}
