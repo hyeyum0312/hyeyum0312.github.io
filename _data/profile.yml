@@ -31,7 +31,7 @@ skill_usage:
   - name: "TanStack Query"
     desc: "요청 공유, 오전 4시 캐시 경계, 보관 상한, 폴링 중첩 방지 (대중교통)"
   - name: "Zustand"
-    desc: "열려 있는 폼 · 시트와 뒤로가기, 스크롤 위치 등 일정 화면의 사용자 동작 상태 관리 (MOA)"
+    desc: "일정 화면의 폼 · 시트 열림, 뒤로가기, 스크롤 위치 같은 사용자 동작 상태를 다루며 기능 개발 (MOA)"
   - name: "Flutter WebView"
     desc: "네이티브 브릿지, 권한 처리, 백그라운드 녹음, FCM 수신과 화면 이동 (MediSound · MOA)"
   - name: "Vitest"
