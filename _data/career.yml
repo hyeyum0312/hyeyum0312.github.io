@@ -11,7 +11,7 @@
   role: "Frontend Developer"
   start: "2026-08"
   end: ""
-  projects: [transit]
+  projects: [transit, mobility-web]
   highlights:
     - "현장 테스트로 실제 도착과 비교해 **지하철 시간표 기준 + 실시간 보정** 구조로 개선"
     - "버스·지하철 승하차 알림의 **진행 단계가 엇갈리던 문제**를 우선순위 규칙으로 해결"

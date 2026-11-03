@@ -9,7 +9,7 @@
   start: "2026-08"
   end: ""
   team: "외주 FE 2 · BE 1 개발 → 인수 후 FE 1 (본인)"
-  stack: [React, TypeScript, TanStack Query, Vitest]
+  stack: [React, TypeScript, Next.js, TanStack Query, Vitest]
   tasks:
     - "외주로 개발된 버스·지하철 기능을 인수해 1개월간 실제 운행 시간과 맞추고 개선"
     - "버스·지하철 승하차 알림 기능 개발"
@@ -23,6 +23,20 @@
     - "느린 응답에서 버스 알림 폴링이 겹치지 않도록 진행 중 조회를 건너뛰게 하고(60초 지연 재현 테스트에서 조회 시작 7회 → 1회), 지하철 응답 캐시에 128개 보관 상한과 만료 정리 적용"
     - "정책과 예외 조건을 문서화해 AI 협업 기준으로 쓰고, 검증할 경쟁 조건을 직접 정의해 AI로 Vitest 회귀 테스트를 작성"
   posts: [/14th/, /13th/, /12th/, /15th/, /16th/]
+
+- id: mobility-web
+  name: "모빌리티 앱 웹 화면 · 백오피스"
+  desc: "모빌리티 통합 앱에 iframe으로 들어가는 웹 화면, 메인페이지, 운영 백오피스"
+  start: "2026-08"
+  end: ""
+  team: "TODO: 참여 인원"
+  stack: [React, TypeScript, Next.js, pnpm 모노레포]
+  tasks:
+    - "모노레포 구조에서 모바일 앱 iframe에 들어가는 웹 화면 개발"
+    - "메인페이지 리뉴얼 개선"
+    - "백엔드 개발자가 만든 백오피스 컴포넌트 · UI의 개선점을 찾아 리팩토링"
+  achievements: []
+  posts: []
 
 - id: moa
   name: "MOA"
