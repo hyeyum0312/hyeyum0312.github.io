@@ -20,7 +20,7 @@ title: "Hyenii.log"
 title_separator: "-"
 subtitle: # site tagline that appears below site title in masthead
 name: "Hyenii"
-description: "경력 5년 이상 프론트엔드 개발자 조혜연의 기술 블로그 — 권한 정책, 상태 관리, 인증, WebView 복구처럼 운영 환경에서 부딪힌 문제와 결정을 기록합니다."
+description: "생각은 기획자처럼, 구현은 개발자답게. 프론트엔드 개발자 조혜연의 기술 블로그 — 운영 환경에서 부딪힌 문제와 결정을 기록합니다."
 url: "https://hyeyum0312.github.io"
 future: true
 baseurl: "" # the subpath of your site, e.g. "/blog"
@@ -86,7 +86,7 @@ facebook:
   username:
   app_id:
   publisher:
-og_image: # Open Graph/Twitter default site image
+og_image: /images/og/site.png # 링크 공유(카톡 · 노션 등) 기본 미리보기 이미지, 1200×630
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
