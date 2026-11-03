@@ -809,6 +809,23 @@
   }
 }
 
+/* 결과 아래 검증 방법 */
+.verified {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--cv-accent-soft);
+  color: var(--cv-accent-dark);
+  font-size: 12px;
+  line-height: 1.5;
+
+  b {
+    flex: none;
+  }
+}
+
 /* 세로 처리 흐름 */
 .flow {
   margin: 0;

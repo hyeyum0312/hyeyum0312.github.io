@@ -2,6 +2,7 @@
   슬라이드 상단 제목. include.eyebrow(영문 라벨), include.title(HTML 허용), include.sub(제목 옆 보조 문구),
   include.aside(오른쪽 문구, **굵게** 허용), include.project가 있으면 오른쪽에 프로젝트 정보 박스를 그린다.
   include.stack이 있으면 프로젝트 전체 스택 대신 그 목록을 보여준다(케이스와 관련된 기술만).
+  include.role이 있으면 정보 박스에 이 케이스에서 맡은 범위를 보여준다.
 {%- endcomment -%}
 <header class="slide__head">
   <div class="slide__head-main">
@@ -16,6 +17,7 @@
     <dt>프로젝트</dt><dd>{{ hp.name }}{% if hjob %} <span class="slide__info-sub">({% include cv/company-name.html job=hjob %})</span>{% endif %}</dd>
     <dt>기간</dt><dd class="slide__info-period">{% include cv/period.html start=hp.start end=hp.end ongoing="진행 중" %}</dd>
     {%- if hp.team and hp.team != "" %}{% unless hp.team contains "TODO:" %}<dt>개발 인원</dt><dd>{{ hp.team }}</dd>{% endunless %}{% endif %}
+    {%- if include.role %}<dt>내 역할</dt><dd>{{ include.role }}</dd>{% endif %}
     <dt>기술 스택</dt><dd class="slide__info-stack">{{ include.stack | default: hp.stack | join: " · " }}</dd>
   </dl>
   {%- elsif include.aside %}
