@@ -11,7 +11,7 @@ classes: cv-page
 {% assign pf = site.data.profile %}
 {% assign pv = site.data.private %}
 
-<style>@page { size: A4; margin: 16mm 15mm; }</style>
+<style>@page { size: A4; margin: 13mm 15mm; }</style>
 
 <div id="main" role="main" class="home cv cv--resume">
   <header class="doc-head">
@@ -71,6 +71,16 @@ classes: cv-page
     <h2 class="doc-section__title">학력</h2>
     {%- for e in edu %}
     <p><b>{{ e.school }}</b> {{ e.major }} {{ e.status }} <span class="doc-muted">· {% include cv/period.html start=e.start end=e.end %}</span></p>
+    {%- endfor %}
+  </section>
+  {%- endif %}
+
+  {%- if pf.prior_career and pf.prior_career.size > 0 %}
+  <section class="doc-section doc-keep">
+    <h2 class="doc-section__title">이전 경력</h2>
+    {%- for p in pf.prior_career %}
+    <p><b>{{ p.company }}</b> {{ p.roles }}{% if p.period and p.period != "" %} <span class="doc-muted">· {{ p.period }}</span>{% endif %}</p>
+    <p class="doc-muted">{{ p.desc }}</p>
     {%- endfor %}
   </section>
   {%- endif %}
